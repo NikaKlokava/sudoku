@@ -3,10 +3,30 @@ import classes from "./game.module.css";
 export const Game = () => {
   return (
     <div className={classes.game_page}>
-      <header></header>
-      <main>
+      <header className={classes.header}>
+        <p className={classes.header_title}>Sudoku</p>
+      </header>
+      <main className={classes.content_container}>
         <div className={classes.sudoku_container}>
-          <div className={classes.sudoku_box}>3</div>
+          <div className={classes.first_row}>
+            <div className={classes.sudoku_big_square}></div>
+            <div className={classes.sudoku_big_square}></div>
+            <div className={classes.sudoku_big_square}></div>
+          </div>
+          <div className={classes.first_row}>
+            <div className={classes.sudoku_big_square}></div>
+            <div className={classes.sudoku_big_square}></div>
+            <div className={classes.sudoku_big_square}></div>
+          </div>
+          <div className={classes.first_row}>
+            <div className={classes.sudoku_big_square}></div>
+            <div className={classes.sudoku_big_square}></div>
+            <div className={classes.sudoku_big_square}></div>
+          </div>
+        </div>
+        <div className={classes.buttons_container}>
+          <button className={classes.button}>Check</button>
+          <button className={classes.button}>Restart</button>
         </div>
       </main>
       <footer className={classes.footer}>
