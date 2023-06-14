@@ -39,11 +39,11 @@ const shuffle = (array) => {
   array.sort(() => Math.random() - 0.5);
 };
 
-function* chunks(arr, n) {
-  for (let i = 0; i < arr.length; i += n) {
-    yield arr.slice(i, i + n);
-  }
-}
+// function* chunks(arr, n) {
+//   for (let i = 0; i < arr.length; i += n) {
+//     yield arr.slice(i, i + n);
+//   }
+// }
 const data: FieldType = generateEmpty();
 
 // [
@@ -121,7 +121,7 @@ for (let sqIndex = 0; sqIndex < squares.length; sqIndex += 1) {
 
         if (validValueIndex === -1) {
           throw new Error(
-            `Can find valid value for [gRow=${gRow}][gColumn=${gColumn}] [column=${column}][row=${row}].`
+            `Can't find valid value for [gRow=${gRow}][gColumn=${gColumn}] [column=${column}][row=${row}].`
           );
         }
 
@@ -142,10 +142,31 @@ for (let sqIndex = 0; sqIndex < squares.length; sqIndex += 1) {
       shuffle(initial);
     }
     if (attempt === maxNumberOfAttempt - 1) {
-    //   console.warn("Start again");
+      //   console.warn("Start again");
       sqIndex = 0;
     }
   }
 }
 
+const removeNumbers = (num: number) => {
+  while (num !== 0) {
+    const [gRow, gColumn, row, column] = Array.from(Array(9)).map(() =>
+      Math.floor(Math.random() * 3)
+    );
+    // let gRow = Math.floor(Math.random() * 3);
+    // let gColumn = Math.floor(Math.random() * 3);
+    // let row = Math.floor(Math.random() * 3);
+    // let column = Math.floor(Math.random() * 3);
+
+    if (data[gRow][gColumn][row][column] !== 0) {
+      num--;
+      data[gRow][gColumn][row][column] = 0;
+    }
+  }
+
+  return;
+};
+
+printField(data);
+removeNumbers(44);
 printField(data);
