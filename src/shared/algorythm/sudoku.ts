@@ -1,8 +1,8 @@
-type SquareType = Array<number[]>; // array
-type SquareRowType = Array<SquareType>; // [array, array, array...]
-type FieldType = Array<SquareRowType>; // [ [array, array, array...], [array, array, array...], ...]
+type SquareType = Array<number[]>;
+type SquareRowType = Array<SquareType>;
+type FieldType = Array<SquareRowType>;
 
-const generateEmpty = () => {
+export const generateEmpty = () => {
   const empty: FieldType = [];
   Array.from(Array(3)).forEach((_, i) => {
     const squareRow: SquareRowType = [];
@@ -33,9 +33,10 @@ const printField = (field: FieldType) => {
     });
     message += "\n";
   }
-  console.log(message);
+  return message;
+  //   console.log(message);
 };
-const shuffle = (array) => {
+const shuffle = (array: number[]) => {
   array.sort(() => Math.random() - 0.5);
 };
 
@@ -94,6 +95,7 @@ const squares = [
   [2, 0],
   [2, 1],
 ];
+
 for (let sqIndex = 0; sqIndex < squares.length; sqIndex += 1) {
   const [gRow, gColumn] = squares[sqIndex];
 
@@ -167,6 +169,11 @@ const removeNumbers = (num: number) => {
   return;
 };
 
-printField(data);
-removeNumbers(44);
-printField(data);
+// printField(data);
+// removeNumbers(44);
+// printField(data);
+
+export const createSudokuField = () => {
+  removeNumbers(44);
+  return data;
+};

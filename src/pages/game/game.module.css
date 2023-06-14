@@ -17,17 +17,17 @@
   align-items: center;
 }
 
-.row,
-.second_row,
-.third_row {
+.global_row {
   display: flex;
 }
 
 .big_square {
-  width: 150px;
-  height: fit-content;
-  margin: 2px;
-  background-color: rgba(115, 212, 244, 0.283);
+  margin: 2.5px;
+  /* border: 2px solid rgba(41, 163, 203, 0.786); */
+}
+
+.row {
+  display: flex;
 }
 
 .small_square {
@@ -40,8 +40,11 @@
   height: 50px;
   margin: 1px;
   color: rgb(20, 92, 116);
-  background-color: rgba(68, 197, 240, 0.48);
+  background-color: rgba(68, 197, 240, 0.511);
 }
+/* .empty_small_square{
+
+} */
 
 .buttons_container {
   display: flex;
