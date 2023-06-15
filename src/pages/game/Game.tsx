@@ -5,9 +5,8 @@ import { SudokuFiled } from "../../shared/components/sudoku_field";
 
 export const Game = () => {
   const handleNumberClick = (e: any) => {
-    console.log(+e.target.innerHTML); // return click number
+    console.log(+e.target.innerHTML); 
   };
-
   return (
     <div className={cl.game_page}>
       <Header />

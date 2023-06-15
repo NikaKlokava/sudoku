@@ -1,6 +1,13 @@
 type SquareType = Array<number[]>;
 type SquareRowType = Array<SquareType>;
 type FieldType = Array<SquareRowType>;
+type SmallSquareType = {
+  num: number;
+  row: number;
+  column: number;
+};
+type BigSquareType = SmallSquareType[];
+type SudokuFieldType = BigSquareType[];
 
 export const generateEmpty = () => {
   const empty: FieldType = [];
@@ -40,26 +47,7 @@ const shuffle = (array: number[]) => {
   array.sort(() => Math.random() - 0.5);
 };
 
-// function* chunks(arr, n) {
-//   for (let i = 0; i < arr.length; i += n) {
-//     yield arr.slice(i, i + n);
-//   }
-// }
 const data: FieldType = generateEmpty();
-
-// [
-//   [0, 0],
-//   [1, 1],
-//   [2, 2],
-// ].forEach(([i, j]) => {
-//   const initial = Array.from(Array(9)).map((_, i) => i + 1);
-//   shuffle(initial);
-
-//   const chunked = [...chunks(initial, 3)];
-//   chunked.forEach((ch, k) => {
-//     data[i][j][k] = ch;
-//   });
-// });
 
 export const getNumbersInRow = (index: number) => {
   const squareRow = Math.floor(index / 3);
@@ -155,11 +143,6 @@ const removeNumbers = (num: number) => {
     const [gRow, gColumn, row, column] = Array.from(Array(9)).map(() =>
       Math.floor(Math.random() * 3)
     );
-    // let gRow = Math.floor(Math.random() * 3);
-    // let gColumn = Math.floor(Math.random() * 3);
-    // let row = Math.floor(Math.random() * 3);
-    // let column = Math.floor(Math.random() * 3);
-
     if (data[gRow][gColumn][row][column] !== 0) {
       num--;
       data[gRow][gColumn][row][column] = 0;
@@ -169,11 +152,38 @@ const removeNumbers = (num: number) => {
   return;
 };
 
-// printField(data);
-// removeNumbers(44);
-// printField(data);
+const createArray = (data: FieldType): SudokuFieldType => {
+  const newArray = data.reduce(
+    (accumulator: any, currentValue: any, gRowIndex: number) => {
+      const newValue = currentValue.reduce(
+        (accum: BigSquareType, current: SquareType, gColumnIndex: number) => {
+          const value = current.reduce(
+            (acc: BigSquareType, curr: number[], row: number) => {
+              const obj = curr.map((elem: number, columnIndex: number) => {
+                return {
+                  num: elem,
+                  row: row + 3 * gRowIndex,
+                  column: columnIndex + 3 * gColumnIndex,
+                };
+              });
+              return [...acc, ...obj];
+            },
+            []
+          );
+          return [...accum, value];
+        },
+        []
+      );
+      return [...accumulator, ...newValue];
+    },
+    []
+  );
 
-export const createSudokuField = () => {
-  removeNumbers(44);
-  return data;
+  return newArray;
 };
+const createDataArray = (): SudokuFieldType => {
+  removeNumbers(44);
+  const array = createArray(data);
+  return array;
+};
+export const dataArray = createDataArray();

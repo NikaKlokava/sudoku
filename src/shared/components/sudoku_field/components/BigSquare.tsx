@@ -1,13 +1,17 @@
 import { memo } from "react";
-import { Row } from "./Row";
 import cl from "../sudoku_field.module.css";
+import { SmallSquare } from "./SmallSquare";
 
-export const BigSquare = memo(({ bigSquare, bigSquareIndex }: any) => {
+type Props = {
+  arr: FieldRow;
+  i: number;
+};
+export const BigSquare = memo(({ arr, i }: Props) => {
   return (
-    <div className={cl.big_square} key={bigSquareIndex}>
-      {bigSquare.map((row: any, rowIndex: number) => {
-        return <Row row={row} key={rowIndex} rowIndex={rowIndex} />;
-      })}
+    <div className={cl.big_square} key={i}>
+      {arr.map((elem: SmallSquareElement, index: number) => (
+        <SmallSquare elem={elem} index={index} key={index} />
+      ))}
     </div>
   );
 });
