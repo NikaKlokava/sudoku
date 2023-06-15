@@ -1,38 +1,27 @@
 import { Footer } from "../../shared/components/footer";
 import { Header } from "../../shared/components/header";
 import cl from "./game.module.css";
-import { createSudokuField } from "../../shared/algorythm/sudoku";
+import { SudokuFiled } from "../../shared/components/sudoku_field";
 
-const data = createSudokuField();
-console.log(data);
 export const Game = () => {
+  const handleNumberClick = (e: any) => {
+    console.log(+e.target.innerHTML); // return click number
+  };
+
   return (
     <div className={cl.game_page}>
       <Header />
       <main className={cl.content_container}>
-        <div className={cl.sudoku_container}>
-          {data.map((globalRows, index) => {
+        <SudokuFiled />
+        <div className={cl.numbers_container}>
+          {Array.from({ length: 9 }, (_, i) => i + 1).map((elem, index) => {
             return (
-              <div className={cl.global_row} key={index}>
-                {globalRows.map((bigSquare, index) => {
-                  return (
-                    <div className={cl.big_square} key={index}>
-                      {bigSquare.map((row, index) => {
-                        return (
-                          <div className={cl.row} key={index}>
-                            {row.map((smallSquare, index) => {
-                              return (
-                                <div className={cl.small_square} key={index}>
-                                  {smallSquare === 0 ? " " : smallSquare}
-                                </div>
-                              );
-                            })}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  );
-                })}
+              <div
+                className={cl.numbers}
+                key={index}
+                onClick={handleNumberClick}
+              >
+                {elem}
               </div>
             );
           })}

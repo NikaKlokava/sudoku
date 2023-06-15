@@ -1,0 +1,38 @@
+.sudoku_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.global_row {
+  display: flex;
+}
+
+.big_square {
+  margin: 2.5px;
+  border: 1px solid rgba(40, 164, 206, 0.638);
+}
+
+.row {
+  display: flex;
+}
+
+.small_square {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  font-family: 'Source Code Pro', monospace;
+  width: 50px;
+  height: 50px;
+  margin: 1px;
+  color: rgb(20, 92, 116);
+  /* background-color: rgba(68, 197, 240, 0.511);  */
+  background-color: rgba(19, 196, 255, 0.188);
+  cursor: pointer;
+}
+
+.active {
+  background-color: rgba(19, 196, 255, 0.764);
+}

@@ -20,22 +20,22 @@ export const generateEmpty = () => {
   return empty;
 };
 
-const printField = (field: FieldType) => {
-  let message = "\n";
-  for (let i = 0; i < field.length; i++) {
-    const squareRow = field[i];
-    // eslint-disable-next-line no-loop-func
-    Array.from(Array(3)).forEach((_, k) => {
-      Array.from(Array(3)).forEach((_, t) => {
-        message += ` ${squareRow[t][k]} `;
-      });
-      message += "\n";
-    });
-    message += "\n";
-  }
-  return message;
-  //   console.log(message);
-};
+// const printField = (field: FieldType) => {
+//   let message = "\n";
+//   for (let i = 0; i < field.length; i++) {
+//     const squareRow = field[i];
+//     // eslint-disable-next-line no-loop-func
+//     Array.from(Array(3)).forEach((_, k) => {
+//       Array.from(Array(3)).forEach((_, t) => {
+//         message += ` ${squareRow[t][k]} `;
+//       });
+//       message += "\n";
+//     });
+//     message += "\n";
+//   }
+//   return message;
+//   //   console.log(message);
+// };
 const shuffle = (array: number[]) => {
   array.sort(() => Math.random() - 0.5);
 };
@@ -61,7 +61,7 @@ const data: FieldType = generateEmpty();
 //   });
 // });
 
-const getNumbersInRow = (index: number) => {
+export const getNumbersInRow = (index: number) => {
   const squareRow = Math.floor(index / 3);
 
   return data[squareRow].reduce(
@@ -73,7 +73,7 @@ const getNumbersInRow = (index: number) => {
   );
 };
 
-const getNumbersInColumn = (index: number) => {
+export const getNumbersInColumn = (index: number) => {
   const squareColumn = Math.floor(index / 3);
 
   return data.reduce((accumulator, currentValue) => {
