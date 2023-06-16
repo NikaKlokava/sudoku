@@ -10,20 +10,27 @@
   display: grid;
   grid-template-columns: repeat(3, 50px);
   grid-template-rows: repeat(3, 50px);
+  border: 1px solid rgb(23 106 191 / 35%);
 }
 
-.small_square {
+.cell {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
   font-size: 30px;
   font-family: 'Source Code Pro', monospace;
   margin: 1px;
   color: rgb(15, 75, 95);
-  background-color: rgba(60, 192, 237, 0.433);
+  background-color: rgba(100, 204, 238, 0.466);
+  border: none;
   cursor: pointer;
 }
 
-.active {
-  background-color: rgba(23, 176, 227, 0.784);
+.cell:focus {
+  background-color: rgba(252, 245, 178, 0.699);
+  outline: 0px transparent;
+}
+
+.completed {
+  background-color: rgba(65, 186, 227, 0.796);
+  pointer-events: none;
 }
