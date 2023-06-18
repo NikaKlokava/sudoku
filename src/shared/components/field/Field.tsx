@@ -12,7 +12,6 @@ export const Field = () => {
     const data = playfieldData();
     setData(data);
     setLoading(false);
-    //generate data and save to state
   }, []);
 
   return (

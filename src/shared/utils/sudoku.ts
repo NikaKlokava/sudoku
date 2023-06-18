@@ -78,7 +78,7 @@ const squares = [
   [2, 1],
 ];
 
-const generateCompletedField = () => {
+export const generateCompletedField = () => {
   const data: FieldType = generateEmptyField();
 
   const getNumbersInRow = (rowIndex: number) => {
@@ -161,7 +161,7 @@ const generateCompletedField = () => {
   return data;
 };
 
-const removeRandomFieldNumbers = (data: FieldType, count: number) => {
+export const removeRandomFieldNumbers = (data: FieldType, count: number) => {
   while (count !== 0) {
     const [gRow, gColumn, row, column] = Array.from(Array(9)).map(() =>
       Math.floor(Math.random() * 3)
@@ -188,7 +188,7 @@ const removeRandomFieldNumbers = (data: FieldType, count: number) => {
  *    [...] // 9-th
  *  ]
  */
-const formatData = (data: FieldType): FieldData => {
+export const formatData = (data: FieldType): FieldData => {
   const newArray = data.reduce(
     (accumulator: any, currentValue: any, gRowIndex: number) => {
       const newValue = currentValue.reduce(
