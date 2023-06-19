@@ -4,19 +4,31 @@ import cl from "./game.module.css";
 import { Field } from "../../shared/components/field";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
-import { playfieldData } from "../../shared/utils/sudoku";
+import {
+  formatData,
+  generateCompletedField,
+  removeRandomFieldNumbers,
+} from "../../shared/utils/sudoku";
 import { Loader } from "../../shared/components/loader";
+import { MyButton } from "../../shared/components/button";
 
 export const Game = () => {
   // const dataEl = useRef<FieldData>();
   const [data, setData] = useState<FieldData>();
+  const [fullData, setFullData] = useState<FieldData>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const data = playfieldData();
-    // dataEl.current = data;
+    const fullData = generateCompletedField();
+    setFullData(formatData(fullData));
+    removeRandomFieldNumbers(fullData, 44);
+    const data = formatData(fullData);
     setData(data);
     setLoading(false);
+    // const data = playfieldData();
+    // dataEl.current = data;
+    // setData(data);
+    // setLoading(false);
   }, []);
 
   return (
@@ -26,11 +38,12 @@ export const Game = () => {
         {!loading && (
           <Formik
             initialValues={data!}
-            onSubmit={function () {
-              console.log("check");
+            onSubmit={(values: FieldData) => {
+              const yes = JSON.stringify(values) === JSON.stringify(fullData);
+              console.log(yes);
             }}
           >
-            {({ values }) => (
+            {({ handleSubmit }) => (
               <>
                 {loading ? (
                   <Loader />
@@ -38,14 +51,12 @@ export const Game = () => {
                   <>
                     <Field data={data} />
                     <div className={cl.buttons_container}>
-                      <button
-                        className={cl.button}
-                        // onClick={props.handleChange}
+                      <MyButton
+                        onClick={handleSubmit}
                         type="submit"
-                      >
-                        Check
-                      </button>
-                      <button className={cl.button}>Restart</button>
+                        text="Check"
+                      />
+                      <MyButton text="Restart" />
                     </div>
                   </>
                 )}
