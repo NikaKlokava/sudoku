@@ -30,12 +30,13 @@ class _CellWithInput extends Component<Props, State> {
   }
 
   shouldComponentUpdate(nextProps: any) {
-    if (
-      nextProps.formik.values[this.state.squareIndex][this.state.cellIndex] !==
-      this.props.formik.values[this.state.squareIndex][this.state.cellIndex]
-    )
-      return true;
+    const { formik } = this.props;
+    const { squareIndex, cellIndex } = this.state;
 
+    const currentValue = nextProps.formik.values[squareIndex][cellIndex];
+    const prevValue = formik.values[squareIndex][cellIndex];
+
+    if (currentValue !== prevValue) return true;
     return false;
   }
 
@@ -53,48 +54,25 @@ class _CellWithInput extends Component<Props, State> {
   }
 
   render() {
+    const { formik } = this.props;
+    const { squareIndex, cellIndex } = this.state;
+
+    const value =
+      formik.values[squareIndex][cellIndex].num === 0
+        ? ""
+        : formik.values[squareIndex][cellIndex].num;
+        
     return (
       <input
         className={cl.cell}
         type="text"
         autoComplete="off"
         name="[0][0].num"
+        value={value}
         onChange={(e) => this.handleInputChange(e)}
       ></input>
     );
   }
 }
-
-//  {
-//     squareIndex:
-//       Math.floor(value.row / 3) * 3 +
-//       Math.floor(value.column / 3),
-//     cellIndex:
-//       (value.row - Math.floor(value.row / 3) * 3) * 3 -
-//       (Math.floor(value.column / 3) * 3 - value.column),
-//   };
-
-// if (e.target.value.length > 1) {
-//     e.target.value = e.target.value.slice(0, 1); //remove excess values
-//   } else if (!possibleNumbers.includes(+e.target.value)) {
-//     e.target.value = e.target.value.slice(0, 0); // remove letters, it can be only possible numbers
-//   }
-
-// setFieldValue(
-//     `${[this.state.squareIndex]}.${[this.state.cellIndex]}.num`,
-//     e.target.value
-//   );
-
-//
-
-//   <input
-//     className={cl.cell}
-//     type="text"
-//     autoComplete="off"
-//     name="[0][0].num"
-//     onChange={(e) => handleInputChange(e)}
-//   ></input>
-
-// export default withFormik()()
 
 export const CellWithInput = connect(_CellWithInput);
