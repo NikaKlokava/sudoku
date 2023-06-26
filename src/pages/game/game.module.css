@@ -30,6 +30,19 @@
   cursor: pointer;
 }
 
+.modal_container {
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 28px;
+  color: azure;
+  padding: 10px;
+  background-color: rgba(219, 22, 22, 0.797);
+  border-radius: 10px;
+}
+
 .buttons_container {
   display: flex;
   justify-content: center;

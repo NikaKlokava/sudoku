@@ -9,7 +9,7 @@ export const Square = ({ value }: Props) => {
   return (
     <div className={cl.big_square}>
       {value.map((elem: CellItem) => (
-        <Cell value={elem} key={`${elem.num}-${elem.row}-${elem.column}`} />
+        <Cell value={elem} key={`${elem.row}-${elem.column}`} />
       ))}
     </div>
   );
