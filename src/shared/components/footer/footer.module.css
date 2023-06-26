@@ -1,0 +1,47 @@
+.footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 25px;
+}
+
+.footer_content {
+  color: black;
+  font-size: 16px;
+  font-family: 'Source Code Pro', monospace;
+  color: rgb(20, 92, 116);
+}
+
+.links {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.instagram,
+.github,
+.linkedin {
+  width: 35px;
+  height: 35px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.instagram {
+  background-image: url('../../../assets/instagram.svg');
+
+}
+
+.github {
+  width: 30px;
+  height: 30px;
+  background-image: url('../../../assets/github.svg');
+
+}
+
+.linkedin {
+  background-image: url('../../../assets/linkedin.svg');
+}

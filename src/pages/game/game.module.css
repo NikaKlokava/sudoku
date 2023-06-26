@@ -1,0 +1,68 @@
+.game_page {
+  display: grid;
+  grid-template-rows: 1fr 4fr 1fr;
+  height: 100vh;
+}
+
+.content_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.numbers_container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.numbers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  font-size: 25px;
+  font-family: 'Source Code Pro', monospace;
+  margin: 5px;
+  color: rgb(6, 64, 83);
+  background-color: rgba(97, 192, 223, 0.841);
+  cursor: pointer;
+}
+
+.modal_container {
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 28px;
+  color: azure;
+  padding: 10px;
+  background-color: rgba(219, 22, 22, 0.797);
+  border-radius: 10px;
+}
+
+.buttons_container {
+  display: flex;
+  justify-content: center;
+  column-gap: 20px;
+  margin-top: 15px;
+}
+
+.button {
+  min-width: 150px;
+  font-size: 16px;
+  font-family: 'Source Code Pro', monospace;
+  line-height: 30px;
+  color: rgb(6, 64, 83);
+  border-radius: 15px;
+  border: 1px solid rgba(97, 192, 223, 0.841);
+  background: none;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.button:hover {
+  background: rgba(71, 198, 240, 0.283);
+}
