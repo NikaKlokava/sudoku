@@ -1,0 +1,28 @@
+.loader_container {
+  justify-self: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 456px;
+}
+
+.loader_title {
+  align-self: center;
+  text-align: center;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 3px dotted rgb(59, 144, 230);
+  animation: spinner 1.5s linear infinite;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
