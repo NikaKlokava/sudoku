@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/sudoku/static/css/main.79ee1456.css",
+    "main.js": "/sudoku/static/js/main.2fbcf7e7.js",
+    "static/media/instagram.svg": "/sudoku/static/media/instagram.0b3e8a0c68c61f6f9de6.svg",
+    "static/media/github.svg": "/sudoku/static/media/github.d7703c89d24838dd17f0.svg",
+    "static/media/linkedin.svg": "/sudoku/static/media/linkedin.c5b0b1b4792c4adac015.svg",
+    "index.html": "/sudoku/index.html",
+    "main.79ee1456.css.map": "/sudoku/static/css/main.79ee1456.css.map",
+    "main.2fbcf7e7.js.map": "/sudoku/static/js/main.2fbcf7e7.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.79ee1456.css",
+    "static/js/main.2fbcf7e7.js"
+  ]
+}
