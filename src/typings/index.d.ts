@@ -12,3 +12,4 @@ declare type SquareCells = CellItem[];
 
 declare type FieldData = SquareCells[]
 
+declare type TypeOfGame = "9x9" | "4x4" | "6x6"

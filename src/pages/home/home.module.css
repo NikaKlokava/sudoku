@@ -1,0 +1,43 @@
+.home_page {
+  display: grid;
+  grid-template-rows: 1fr 4fr 1fr;
+  height: 100vh;
+}
+
+.content_container {
+  display: flex;
+  justify-content: center;
+}
+
+.content_box {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  row-gap: 20px;
+  border: 1px solid rgb(6, 64, 83);
+  box-shadow: 0px 0px 15px rgb(6, 64, 83);
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.sudoku_img {
+  width: 150px;
+  height: 150px;
+}
+
+.images_container,
+.inputs_container {
+  display: flex;
+  justify-content: space-around;
+  column-gap: 20px;
+}
+
+.input {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.button {
+  align-self: center;
+}
