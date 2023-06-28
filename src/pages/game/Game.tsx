@@ -13,7 +13,7 @@ import cl from "./game.module.css";
 import { Field } from "../../shared/components/field";
 import { SubmitBtn } from "../../shared/components/submitBtn";
 import { MyButton } from "../../shared/components/button";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const Game = () => {
   return (
@@ -81,6 +81,7 @@ const GameContent = () => {
 
 const NewGameBtn = ({ onPress }: { onPress: VoidFunction }) => {
   const { resetForm } = useFormikContext();
+  const navigate = useNavigate();
 
   return (
     <MyButton
@@ -88,6 +89,7 @@ const NewGameBtn = ({ onPress }: { onPress: VoidFunction }) => {
       onClick={() => {
         resetForm();
         onPress();
+        navigate("/sudoku");
       }}
     />
   );

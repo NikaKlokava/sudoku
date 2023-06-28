@@ -10,11 +10,11 @@ export const Square = ({ value, game }: Props) => {
   return (
     <div
       className={
-        game === "9x9"
-          ? cl.big_square_9x9
+        game === "4x4"
+          ? cl.square4x4
           : game === "6x6"
-          ? cl.big_square_6x6
-          : cl.big_square_4x4
+          ? cl.square6x6
+          : cl.square9x9
       }
     >
       {value.map((elem: CellItem) => (

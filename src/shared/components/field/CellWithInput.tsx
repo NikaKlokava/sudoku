@@ -14,18 +14,18 @@ type State = { squareIndex: number; cellIndex: number };
 class _CellWithInput extends Component<Props, State> {
   constructor(props: any) {
     super(props);
+    const game9x9 = props.game === "9x9";
+    const game4x4 = props.game === "4x4";
     this.state = {
       squareIndex:
-        Math.floor(props.value.row / (props.game === "9x9" ? 3 : 2)) *
-          (props.game === "9x9" ? 3 : 2) +
-        Math.floor(props.value.column / (props.game === "4x4" ? 2 : 3)),
+        Math.floor(props.value.row / (game9x9 ? 3 : 2)) * (game9x9 ? 3 : 2) +
+        Math.floor(props.value.column / (game4x4 ? 2 : 3)),
       cellIndex:
         (props.value.row -
-          Math.floor(props.value.row / (props.game === "9x9" ? 3 : 2)) *
-            (props.game === "9x9" ? 3 : 2)) *
-          (props.game === "4x4" ? 2 : 3) -
-        (Math.floor(props.value.column / (props.game === "4x4" ? 2 : 3)) *
-          (props.game === "4x4" ? 2 : 3) -
+          Math.floor(props.value.row / (game9x9 ? 3 : 2)) * (game9x9 ? 3 : 2)) *
+          (game4x4 ? 2 : 3) -
+        (Math.floor(props.value.column / (game4x4 ? 2 : 3)) *
+          (game4x4 ? 2 : 3) -
           props.value.column),
     };
   }

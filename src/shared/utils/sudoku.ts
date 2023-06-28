@@ -27,14 +27,11 @@
 export const generateEmptyField = (four: boolean, nine: boolean) => {
   const empty: FieldType = [];
   Array.from(Array(four ? 2 : 3)).forEach((_, i) => {
-    // 2 for 4x4 ............... 3 for 6x6
     const squareRow: SquareRowType = [];
     Array.from(Array(nine ? 3 : 2)).forEach((_, j) => {
-      // 2 for 4x4 ............... 2 for 6x6
       const square: SquareType = [];
       Array.from(Array(nine ? 3 : 2)).forEach((_, k) => {
-        // 2 for 4x4 ............... 2 for 6x6
-        square.push(four ? [0, 0] : [0, 0, 0]); // [0, 0] for 4x4  ...............  [0, 0, 0] for 6x6
+        square.push(four ? [0, 0] : [0, 0, 0]);
       });
 
       squareRow.push(square);
@@ -62,7 +59,7 @@ export const generateEmptyField = (four: boolean, nine: boolean) => {
 //   //   console.log(message);
 // };
 const generateNumbersArray = (four: boolean, six: boolean) => {
-  return Array.from(Array(four ? 4 : six ? 6 : 9)).map((_, i) => i + 1); // 4 for 4x4  ............... 6 for 6x6
+  return Array.from(Array(four ? 4 : six ? 6 : 9)).map((_, i) => i + 1);
 };
 
 const shuffleNumbersArray = (array: number[]) => {
@@ -104,23 +101,23 @@ export const generateCompletedField = (typeOfGame: string) => {
   const data: FieldType = generateEmptyField(four, nine);
 
   const getNumbersInRow = (rowIndex: number) => {
-    const squareRow = Math.floor(rowIndex / (nine ? 3 : 2)); // 2 . for 4x4 ............... 2 for 6x6
+    const squareRow = Math.floor(rowIndex / (nine ? 3 : 2));
 
     return data[squareRow].reduce(
       (accumulator, currentValue) => [
         ...accumulator,
-        ...currentValue[rowIndex - (nine ? 3 : 2) * squareRow], // 2 . for 4x4 ............... 2 for 6x6
+        ...currentValue[rowIndex - (nine ? 3 : 2) * squareRow],
       ],
       new Array<number>()
     );
   };
 
   const getNumbersInColumn = (columnIndex: number) => {
-    const squareColumn = Math.floor(columnIndex / (four ? 2 : 3)); // 2 . for 4x4 ............... 3 for 6x6
+    const squareColumn = Math.floor(columnIndex / (four ? 2 : 3));
 
     return data.reduce((accumulator, currentValue) => {
       const newValue = currentValue[squareColumn].reduce((acc, current) => {
-        return [...acc, current[columnIndex - (four ? 2 : 3) * squareColumn]]; // 2  for 4x4 ............... 3 for 6x6
+        return [...acc, current[columnIndex - (four ? 2 : 3) * squareColumn]];
       }, []);
       return [...accumulator, ...newValue];
     }, new Array<number>());
@@ -143,9 +140,7 @@ export const generateCompletedField = (typeOfGame: string) => {
 
     const clear = () => {
       Array.from(Array(nine ? 3 : 2)).forEach((_, row) => {
-        // 2 . for 4x4 ............... 2 for 6x6
         Array.from(Array(four ? 2 : 3)).forEach((_, column) => {
-          // 2 .  for 4x4 ............... 3 for 6x6
           data[gRow][gColumn][row][column] = 0;
         });
       });
@@ -153,12 +148,10 @@ export const generateCompletedField = (typeOfGame: string) => {
 
     const tryToFill = () => {
       Array.from(Array(nine ? 3 : 2)).forEach((_, row) => {
-        // 2 . for 4x4 ............... 2 for 6x6
         Array.from(Array(four ? 2 : 3)).forEach((_, column) => {
-          // 2 .  for 4x4 ............... 3 for 6x6
           const rowColumnValue = [
-            ...getNumbersInColumn(column + (four ? 2 : 3) * gColumn), // 2 .  for 4x4 ............... 3 for 6x6
-            ...getNumbersInRow(row + (nine ? 3 : 2) * gRow), // 2 .  for 4x4 ............... 2 for 6x6
+            ...getNumbersInColumn(column + (four ? 2 : 3) * gColumn),
+            ...getNumbersInRow(row + (nine ? 3 : 2) * gRow),
           ];
           const validValueIndex = numbers.findIndex(
             (num) => !rowColumnValue.includes(num)
@@ -202,27 +195,26 @@ export const removeRandomFieldNumbers = (
   typeOfGame: string
 ) => {
   while (count !== 0) {
+    let [gRow, gColumn, row, column] = [0, 0, 0, 0];
+
     if (typeOfGame !== "6x6") {
-      const [gRow, gColumn, row, column] = Array.from(
+      [gRow, gColumn, row, column] = Array.from(
         Array(typeOfGame === "9x9" ? 9 : 4)
       ).map(
         () => Math.floor(Math.random() * (typeOfGame === "9x9" ? 3 : 2)) // 2 . for 4x4
       );
-      if (data[gRow][gColumn][row][column] !== 0) {
-        count--;
-        data[gRow][gColumn][row][column] = 0;
-      }
     } else {
-      const [gRow, column] = Array.from(Array(6)).map(() =>
+      [gRow, column] = Array.from(Array(6)).map(() =>
         Math.floor(Math.random() * 3)
       );
-      const [gColumn, row] = Array.from(Array(6)).map(() =>
+      [gColumn, row] = Array.from(Array(6)).map(() =>
         Math.floor(Math.random() * 2)
       );
-      if (data[gRow][gColumn][row][column] !== 0) {
-        count--;
-        data[gRow][gColumn][row][column] = 0;
-      }
+    }
+
+    if (data[gRow][gColumn][row][column] !== 0) {
+      count--;
+      data[gRow][gColumn][row][column] = 0;
     }
   }
 
@@ -252,9 +244,9 @@ export const formatData = (data: FieldType, typeOfGame: string): FieldData => {
               const obj = curr.map((elem: number, columnIndex: number) => {
                 return {
                   num: elem,
-                  row: row + (typeOfGame === "9x9" ? 3 : 2) * gRowIndex, // 2 . for 4x4 ............... 2 for 6x6
+                  row: row + (typeOfGame === "9x9" ? 3 : 2) * gRowIndex,
                   column:
-                    columnIndex + (typeOfGame === "4x4" ? 2 : 3) * gColumnIndex, // 2 . for 4x4 ............... 3 for 6x6
+                    columnIndex + (typeOfGame === "4x4" ? 2 : 3) * gColumnIndex,
                 };
               });
               return [...acc, ...obj];

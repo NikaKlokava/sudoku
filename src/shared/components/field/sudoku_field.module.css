@@ -1,23 +1,23 @@
-.grid_9x9,
-.grid_6x6,
-.grid_4x4 {
+.grid9x9,
+.grid6x6,
+.grid4x4 {
   display: grid;
   align-self: center;
   gap: 3px;
   transition: 0.3s ease-in-out;
 }
 
-.grid_9x9 {
+.grid9x9 {
   grid-template-columns: repeat(3, 150px);
   grid-template-rows: repeat(3, 150px);
 }
 
-.grid_6x6 {
+.grid6x6 {
   grid-template-columns: repeat(2, 150px);
   grid-template-rows: repeat(3, 100px);
 }
 
-.grid_4x4 {
+.grid4x4 {
   grid-template-columns: repeat(2, 100px);
   grid-template-rows: repeat(2, 100px);
 }
@@ -30,21 +30,21 @@
   box-shadow: 0px 0px 20px 10px rgba(219, 22, 22, 0.797);
 }
 
-.big_square_9x9 {
+.square9x9 {
   display: grid;
   grid-template-columns: repeat(3, 50px);
   grid-template-rows: repeat(3, 50px);
   border: 1px solid rgb(23 106 191 / 35%);
 }
 
-.big_square_6x6 {
+.square6x6 {
   display: grid;
   grid-template-columns: repeat(3, 50px);
   grid-template-rows: repeat(2, 50px);
   border: 1px solid rgb(23 106 191 / 35%);
 }
 
-.big_square_4x4 {
+.square4x4 {
   display: grid;
   grid-template-columns: repeat(2, 50px);
   grid-template-rows: repeat(2, 50px);
