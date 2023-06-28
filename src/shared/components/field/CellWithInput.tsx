@@ -16,24 +16,30 @@ class _CellWithInput extends Component<Props, State> {
     super(props);
     this.state = {
       squareIndex:
-        Math.floor(props.value.row / 3) * 3 +
-        Math.floor(props.value.column / 3),
+        Math.floor(props.value.row / (props.game === "9x9" ? 3 : 2)) *
+          (props.game === "9x9" ? 3 : 2) +
+        Math.floor(props.value.column / (props.game === "4x4" ? 2 : 3)),
       cellIndex:
-        (props.value.row - Math.floor(props.value.row / 3) * 3) * 3 -
-        (Math.floor(props.value.column / 3) * 3 - props.value.column),
+        (props.value.row -
+          Math.floor(props.value.row / (props.game === "9x9" ? 3 : 2)) *
+            (props.game === "9x9" ? 3 : 2)) *
+          (props.game === "4x4" ? 2 : 3) -
+        (Math.floor(props.value.column / (props.game === "4x4" ? 2 : 3)) *
+          (props.game === "4x4" ? 2 : 3) -
+          props.value.column),
     };
   }
 
-  // shouldComponentUpdate(nextProps: any) {
-  //   const { formik } = this.props;
-  //   const { squareIndex, cellIndex } = this.state;
+  shouldComponentUpdate(nextProps: any) {
+    const { formik } = this.props;
+    const { squareIndex, cellIndex } = this.state;
 
-  //   const currentValue = nextProps.formik.values[squareIndex][cellIndex];
-  //   const prevValue = formik.values[squareIndex][cellIndex];
+    const currentValue = nextProps.formik.values[squareIndex][cellIndex];
+    const prevValue = formik.values[squareIndex][cellIndex];
 
-  //   if (currentValue !== prevValue) return true;
-  //   return false;
-  // }
+    if (currentValue !== prevValue) return true;
+    return false;
+  }
 
   handleInputChange(e: any) {
     if (e.target.value.length > 1) {
@@ -51,21 +57,20 @@ class _CellWithInput extends Component<Props, State> {
   render() {
     const { formik } = this.props;
     const { squareIndex, cellIndex } = this.state;
-    // const value =
-    //   formik.values[squareIndex][cellIndex].num === 0
-    //     ? ""
-    //     : formik.values[squareIndex][cellIndex].num;
+    const value =
+      formik.values[squareIndex][cellIndex].num === 0
+        ? ""
+        : formik.values[squareIndex][cellIndex].num;
 
     return (
-      <></>
-      // <input
-      //   className={cl.cell}
-      //   type="text"
-      //   autoComplete="off"
-      //   name="[0][0].num"
-      //   value={value}
-      //   onChange={(e) => this.handleInputChange(e)}
-      // ></input>
+      <input
+        className={cl.cell}
+        type="text"
+        autoComplete="off"
+        name="[0][0].num"
+        value={value}
+        onChange={(e) => this.handleInputChange(e)}
+      ></input>
     );
   }
 }

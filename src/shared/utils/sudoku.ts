@@ -202,27 +202,28 @@ export const removeRandomFieldNumbers = (
   typeOfGame: string
 ) => {
   while (count !== 0) {
-    const [gRow, gColumn, row, column] = Array.from(
-      Array(typeOfGame === "9x9" ? 9 : 4)
-    ).map(
-      () =>
-        // 4 . for 4x4 ............... 6 for 6x6
-        Math.floor(Math.random() * (typeOfGame === "9x9" ? 3 : 2)) // 2 . for 4x4
-    );
-    if (data[gRow][gColumn][row][column] !== 0) {
-      count--;
-      data[gRow][gColumn][row][column] = 0;
+    if (typeOfGame !== "6x6") {
+      const [gRow, gColumn, row, column] = Array.from(
+        Array(typeOfGame === "9x9" ? 9 : 4)
+      ).map(
+        () => Math.floor(Math.random() * (typeOfGame === "9x9" ? 3 : 2)) // 2 . for 4x4
+      );
+      if (data[gRow][gColumn][row][column] !== 0) {
+        count--;
+        data[gRow][gColumn][row][column] = 0;
+      }
+    } else {
+      const [gRow, column] = Array.from(Array(6)).map(() =>
+        Math.floor(Math.random() * 3)
+      );
+      const [gColumn, row] = Array.from(Array(6)).map(() =>
+        Math.floor(Math.random() * 2)
+      );
+      if (data[gRow][gColumn][row][column] !== 0) {
+        count--;
+        data[gRow][gColumn][row][column] = 0;
+      }
     }
-    // const [gRow, column] = Array.from(Array(6)).map(() =>
-    //   Math.floor(Math.random() * 3)
-    // );
-    // const [gColumn, row] = Array.from(Array(6)).map(() =>
-    //   Math.floor(Math.random() * 2)
-    // ); //  ............... for 6x6
-    // if (data[gRow][gColumn][row][column] !== 0) {
-    //   count--;
-    //   data[gRow][gColumn][row][column] = 0;
-    // }
   }
 
   return;

@@ -7,11 +7,14 @@ import cl from "./home.module.css";
 
 export const Home = () => {
   const [value, setValue] = useState<TypeOfGame>("9x9");
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const handleStartGameClick = useCallback((val: TypeOfGame) => {
-    navigate("/game", {state: value});
-  }, [navigate, value]);
+  const handleStartGameClick = useCallback(
+    (val: TypeOfGame) => {
+      navigate("/game", { state: value });
+    },
+    [navigate, value]
+  );
 
   return (
     <div className={cl.home_page}>

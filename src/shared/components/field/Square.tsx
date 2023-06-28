@@ -18,7 +18,7 @@ export const Square = ({ value, game }: Props) => {
       }
     >
       {value.map((elem: CellItem) => (
-        <Cell value={elem} key={`${elem.row}-${elem.column}`} />
+        <Cell value={elem} game={game} key={`${elem.row}-${elem.column}`} />
       ))}
     </div>
   );
