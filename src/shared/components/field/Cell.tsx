@@ -9,6 +9,5 @@ export const Cell = ({ value }: Props) => {
   if (value.num !== 0) {
     return <CellPrefilled value={value} />;
   }
-
   return <CellWithInput value={value} />;
 };

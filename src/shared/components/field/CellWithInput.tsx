@@ -1,9 +1,4 @@
-import {
-  // useFormikContext,
-  // withFormik,
-  connect,
-  FormikContextType,
-} from "formik";
+import { connect, FormikContextType } from "formik";
 import { Component } from "react";
 import cl from "./sudoku_field.module.css";
 
@@ -29,16 +24,16 @@ class _CellWithInput extends Component<Props, State> {
     };
   }
 
-  shouldComponentUpdate(nextProps: any) {
-    const { formik } = this.props;
-    const { squareIndex, cellIndex } = this.state;
+  // shouldComponentUpdate(nextProps: any) {
+  //   const { formik } = this.props;
+  //   const { squareIndex, cellIndex } = this.state;
 
-    const currentValue = nextProps.formik.values[squareIndex][cellIndex];
-    const prevValue = formik.values[squareIndex][cellIndex];
+  //   const currentValue = nextProps.formik.values[squareIndex][cellIndex];
+  //   const prevValue = formik.values[squareIndex][cellIndex];
 
-    if (currentValue !== prevValue) return true;
-    return false;
-  }
+  //   if (currentValue !== prevValue) return true;
+  //   return false;
+  // }
 
   handleInputChange(e: any) {
     if (e.target.value.length > 1) {
@@ -56,21 +51,21 @@ class _CellWithInput extends Component<Props, State> {
   render() {
     const { formik } = this.props;
     const { squareIndex, cellIndex } = this.state;
+    // const value =
+    //   formik.values[squareIndex][cellIndex].num === 0
+    //     ? ""
+    //     : formik.values[squareIndex][cellIndex].num;
 
-    const value =
-      formik.values[squareIndex][cellIndex].num === 0
-        ? ""
-        : formik.values[squareIndex][cellIndex].num;
-        
     return (
-      <input
-        className={cl.cell}
-        type="text"
-        autoComplete="off"
-        name="[0][0].num"
-        value={value}
-        onChange={(e) => this.handleInputChange(e)}
-      ></input>
+      <></>
+      // <input
+      //   className={cl.cell}
+      //   type="text"
+      //   autoComplete="off"
+      //   name="[0][0].num"
+      //   value={value}
+      //   onChange={(e) => this.handleInputChange(e)}
+      // ></input>
     );
   }
 }

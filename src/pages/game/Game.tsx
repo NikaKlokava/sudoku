@@ -13,6 +13,7 @@ import cl from "./game.module.css";
 import { Field } from "../../shared/components/field";
 import { SubmitBtn } from "../../shared/components/submitBtn";
 import { MyButton } from "../../shared/components/button";
+import { useLocation } from "react-router-dom";
 
 export const Game = () => {
   return (
@@ -27,19 +28,21 @@ export const Game = () => {
 };
 
 const GameContent = () => {
+  const location = useLocation();
   const [data, setData] = useState<FieldData>();
   const [fullData, setFullData] = useState<FieldData>();
 
   const [loading, setLoading] = useState(true);
 
   const loadGame = useCallback(() => {
-    const fullData = generateCompletedField(); // get full sudoku
-    setFullData(formatData(fullData)); // format data for further comparison
-    removeRandomFieldNumbers(fullData, 44); // remove numbers from full field
-    const data = formatData(fullData); // get playfield data
+    const fullData = generateCompletedField(location.state); // get full sudoku
+    setFullData(formatData(fullData, location.state)); // format data for further comparison
+    removeRandomFieldNumbers(fullData, 7, location.state); // remove numbers from full field
+    const data = formatData(fullData, location.state); // get playfield data
 
     setData(data);
     setLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -60,7 +63,7 @@ const GameContent = () => {
       }}
     >
       <>
-        <Field data={data} />
+        <Field data={data} game={location.state} />
         <div className={cl.buttons_container}>
           <SubmitBtn />
           <NewGameBtn
