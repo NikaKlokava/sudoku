@@ -1,9 +1,4 @@
-import {
-  // useFormikContext,
-  // withFormik,
-  connect,
-  FormikContextType,
-} from "formik";
+import { connect, FormikContextType } from "formik";
 import { Component } from "react";
 import cl from "./sudoku_field.module.css";
 
@@ -19,13 +14,19 @@ type State = { squareIndex: number; cellIndex: number };
 class _CellWithInput extends Component<Props, State> {
   constructor(props: any) {
     super(props);
+    const game9x9 = props.game === "9x9";
+    const game4x4 = props.game === "4x4";
     this.state = {
       squareIndex:
-        Math.floor(props.value.row / 3) * 3 +
-        Math.floor(props.value.column / 3),
+        Math.floor(props.value.row / (game9x9 ? 3 : 2)) * (game9x9 ? 3 : 2) +
+        Math.floor(props.value.column / (game4x4 ? 2 : 3)),
       cellIndex:
-        (props.value.row - Math.floor(props.value.row / 3) * 3) * 3 -
-        (Math.floor(props.value.column / 3) * 3 - props.value.column),
+        (props.value.row -
+          Math.floor(props.value.row / (game9x9 ? 3 : 2)) * (game9x9 ? 3 : 2)) *
+          (game4x4 ? 2 : 3) -
+        (Math.floor(props.value.column / (game4x4 ? 2 : 3)) *
+          (game4x4 ? 2 : 3) -
+          props.value.column),
     };
   }
 
@@ -56,12 +57,11 @@ class _CellWithInput extends Component<Props, State> {
   render() {
     const { formik } = this.props;
     const { squareIndex, cellIndex } = this.state;
-
     const value =
       formik.values[squareIndex][cellIndex].num === 0
         ? ""
         : formik.values[squareIndex][cellIndex].num;
-        
+
     return (
       <input
         className={cl.cell}
