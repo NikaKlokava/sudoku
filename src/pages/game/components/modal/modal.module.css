@@ -1,0 +1,62 @@
+.modal_wrapper:before {
+  content: '';
+  background: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.modal_container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 30px;
+  border: 1px solid rgb(6, 64, 83);
+  box-shadow: 0px 0px 15px rgb(137, 187, 204);
+  border-radius: 10px;
+  background-color: rgba(201, 230, 240, 0.942);
+  z-index: 5;
+}
+
+.sudoku_img {
+  width: 150px;
+  height: 150px;
+}
+
+.images_container,
+.inputs_container {
+  display: flex;
+  justify-content: space-around;
+  column-gap: 20px;
+}
+
+.input {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.button {
+  min-width: 150px;
+  align-self: center;
+  font-size: 16px;
+  font-family: 'Source Code Pro', monospace;
+  line-height: 30px;
+  color: rgb(6, 64, 83);
+  border-radius: 15px;
+  border: 1px solid rgba(97, 192, 223, 0.841);
+  background: none;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.button:hover {
+  background: rgba(71, 198, 240, 0.283);
+}

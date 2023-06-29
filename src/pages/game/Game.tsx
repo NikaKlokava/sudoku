@@ -1,19 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
-import { Formik, useFormikContext } from "formik";
-
-import { Footer } from "../../shared/components/footer";
-import { Header } from "../../shared/components/header";
-import { Loader } from "../../shared/components/loader";
+import { useCallback, useState } from "react";
+import { Formik } from "formik";
 import {
   formatData,
   generateCompletedField,
   removeRandomFieldNumbers,
 } from "../../shared/utils/sudoku";
 import cl from "./game.module.css";
-import { Field } from "../../shared/components/field";
-import { SubmitBtn } from "../../shared/components/submitBtn";
-import { MyButton } from "../../shared/components/button";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Field } from "./components/field";
+import { Footer, Header, Loader } from "../../shared/components";
+import { ModalWindow } from "./components/modal";
+import { NewGameBtn, SubmitBtn } from "./components/buttons";
 
 export const Game = () => {
   return (
@@ -28,69 +24,78 @@ export const Game = () => {
 };
 
 const GameContent = () => {
-  const location = useLocation();
+  const [fieldSize, setFieldSize] = useState<TypeOfGame>("9x9");
+  const [startGame, setStartGame] = useState(false);
   const [data, setData] = useState<FieldData>();
   const [fullData, setFullData] = useState<FieldData>();
-
   const [loading, setLoading] = useState(true);
 
-  const loadGame = useCallback(() => {
-    const fullData = generateCompletedField(location.state); // get full sudoku
-    setFullData(formatData(fullData, location.state)); // format data for further comparison
-    removeRandomFieldNumbers(fullData, 7, location.state); // remove numbers from full field
-    const data = formatData(fullData, location.state); // get playfield data
+  const loadGame = useCallback((size: TypeOfGame) => {
+    const fullData = generateCompletedField(size);
+    const formatedFullData = formatData(fullData, size);
+    setFullData(formatedFullData);
 
+    removeRandomFieldNumbers(
+      fullData,
+      size === "9x9" ? 44 : size === "6x6" ? 15 : 7,
+      size
+    );
+    const data = formatData(fullData, size);
     setData(data);
     setLoading(false);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    loadGame();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const handleChangeValueClick = (size: TypeOfGame) => {
+    setFieldSize(size);
+  };
 
-  if (loading || !data) return <Loader />;
-
-  return (
-    <Formik
-      initialValues={data}
-      validateOnChange={false}
-      enableReinitialize
-      onSubmit={(values: FieldData) => {
-        const isValid = JSON.stringify(values) === JSON.stringify(fullData);
-        alert(isValid ? "Valid" : "Invalid");
-      }}
-    >
-      <>
-        <Field data={data} game={location.state} />
-        <div className={cl.buttons_container}>
-          <SubmitBtn />
-          <NewGameBtn
-            onPress={() => {
-              setData([]);
-              setLoading(true);
-              loadGame();
-            }}
-          />
-        </div>
-      </>
-    </Formik>
-  );
-};
-
-const NewGameBtn = ({ onPress }: { onPress: VoidFunction }) => {
-  const { resetForm } = useFormikContext();
-  const navigate = useNavigate();
+  const handleStartGameClick = () => {
+    setStartGame(true);
+    loadGame(fieldSize);
+  };
 
   return (
-    <MyButton
-      text="New Game"
-      onClick={() => {
-        resetForm();
-        onPress();
-        navigate("/sudoku");
-      }}
-    />
+    <>
+      {startGame ? (
+        <>
+          {loading || !data ? (
+            <Loader />
+          ) : (
+            <Formik
+              initialValues={data}
+              validateOnChange={false}
+              enableReinitialize
+              onSubmit={(values: FieldData) => {
+                const isValid =
+                  JSON.stringify(values) === JSON.stringify(fullData);
+                alert(isValid ? "Valid" : "Invalid");
+              }}
+            >
+              <>
+                <Field data={data} game={fieldSize} />
+                <div className={cl.buttons_container}>
+                  <SubmitBtn />
+                  <NewGameBtn
+                    onPress={() => {
+                      setData([]);
+                      setLoading(true);
+                      setStartGame(false);
+                      loadGame(fieldSize);
+                    }}
+                  />
+                </div>
+              </>
+            </Formik>
+          )}
+        </>
+      ) : (
+        <ModalWindow
+          changeValue={handleChangeValueClick}
+          onStartClick={handleStartGameClick}
+        />
+      )}
+    </>
   );
 };
