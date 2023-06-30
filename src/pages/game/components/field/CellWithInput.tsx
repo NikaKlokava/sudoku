@@ -14,8 +14,8 @@ type State = { squareIndex: number; cellIndex: number };
 class _CellWithInput extends Component<Props, State> {
   constructor(props: any) {
     super(props);
-    const game9x9 = props.game === "9x9";
-    const game4x4 = props.game === "4x4";
+    const game9x9 = props.size === "9x9";
+    const game4x4 = props.size === "4x4";
     this.state = {
       squareIndex:
         Math.floor(props.value.row / (game9x9 ? 3 : 2)) * (game9x9 ? 3 : 2) +

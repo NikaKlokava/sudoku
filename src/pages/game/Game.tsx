@@ -1,15 +1,11 @@
 import { useCallback, useState } from "react";
 import { Formik } from "formik";
-import {
-  formatData,
-  generateCompletedField,
-  removeRandomFieldNumbers,
-} from "../../shared/utils/sudoku";
 import cl from "./game.module.css";
 import { Field } from "./components/field";
 import { Footer, Header, Loader } from "../../shared/components";
 import { ModalWindow } from "./components/modal";
 import { NewGameBtn, SubmitBtn } from "./components/buttons";
+import { FieldGenerator } from "../../shared/utils/sudoku_classes";
 
 export const Game = () => {
   return (
@@ -24,30 +20,30 @@ export const Game = () => {
 };
 
 const GameContent = () => {
-  const [fieldSize, setFieldSize] = useState<TypeOfGame>("9x9");
-  const [startGame, setStartGame] = useState(false);
+  const [fieldSize, setFieldSize] = useState<FieldSize>("9x9");
   const [data, setData] = useState<FieldData>();
   const [fullData, setFullData] = useState<FieldData>();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const loadGame = useCallback((size: TypeOfGame) => {
-    const fullData = generateCompletedField(size);
-    const formatedFullData = formatData(fullData, size);
+  const [startGame, setStartGame] = useState<boolean>(false);
+
+  const loadGame = useCallback((size: FieldSize) => {
+    const field = new FieldGenerator(size).getField();
+
+    const fullData = field.generateCompletedField();
+    const formatedFullData = field.formatData(fullData);
+
     setFullData(formatedFullData);
+    field.removeRandomFieldNumbers(fullData);
 
-    removeRandomFieldNumbers(
-      fullData,
-      size === "9x9" ? 44 : size === "6x6" ? 15 : 7,
-      size
-    );
-    const data = formatData(fullData, size);
+    const data = field.formatData(fullData);
     setData(data);
     setLoading(false);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleChangeValueClick = (size: TypeOfGame) => {
+  const handleChangeValueClick = (size: FieldSize) => {
     setFieldSize(size);
   };
 
@@ -74,7 +70,7 @@ const GameContent = () => {
               }}
             >
               <>
-                <Field data={data} game={fieldSize} />
+                <Field data={data} size={fieldSize} />
                 <div className={cl.buttons_container}>
                   <SubmitBtn />
                   <NewGameBtn
