@@ -4,8 +4,9 @@ enum SizeOfField {
   Four = "4x4",
 }
 
-class Base {
-  shuffleNumbersArray(array: number[]) {
+abstract class Base {
+
+  private shuffleNumbersArray(array: number[]) {
     array.sort(() => Math.random() - 0.5);
   }
 

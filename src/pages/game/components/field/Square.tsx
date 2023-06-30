@@ -1,5 +1,6 @@
 import cl from "./sudoku_field.module.css";
 import { Cell } from "./Cell";
+import { SizeOfField } from "../../../../shared/utils/utils";
 
 type Props = {
   value: SquareCells;
@@ -10,9 +11,9 @@ export const Square = ({ value, size }: Props) => {
   return (
     <div
       className={
-        size === "4x4"
+        size === SizeOfField.Four
           ? cl.square4x4
-          : size === "6x6"
+          : size === SizeOfField.Six
           ? cl.square6x6
           : cl.square9x9
       }

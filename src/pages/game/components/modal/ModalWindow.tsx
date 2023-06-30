@@ -1,4 +1,5 @@
 import { MyButton } from "../../../../shared/components";
+import { SizeOfField } from "../../../../shared/utils/utils";
 import cl from "./modal.module.css";
 
 export const ModalWindow = ({ changeValue, onStartClick }: any) => {
@@ -27,20 +28,20 @@ export const ModalWindow = ({ changeValue, onStartClick }: any) => {
             type="radio"
             name="game"
             className={cl.input}
-            onClick={() => changeValue("9x9")}
+            onClick={() => changeValue(SizeOfField.Nine)}
             defaultChecked
           />
           <input
             type="radio"
             name="game"
             className={cl.input}
-            onClick={() => changeValue("4x4")}
+            onClick={() => changeValue(SizeOfField.Four)}
           />
           <input
             type="radio"
             name="game"
             className={cl.input}
-            onClick={() => changeValue("6x6")}
+            onClick={() => changeValue(SizeOfField.Six)}
           />
         </div>
         <MyButton

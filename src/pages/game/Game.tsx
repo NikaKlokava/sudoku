@@ -5,7 +5,8 @@ import { Field } from "./components/field";
 import { Footer, Header, Loader } from "../../shared/components";
 import { ModalWindow } from "./components/modal";
 import { NewGameBtn, SubmitBtn } from "./components/buttons";
-import { FieldGenerator } from "../../shared/utils/sudoku_classes";
+import { FieldGenerator } from "../../shared/utils/algorythm";
+import { SizeOfField } from "../../shared/utils/utils";
 
 export const Game = () => {
   return (
@@ -20,7 +21,7 @@ export const Game = () => {
 };
 
 const GameContent = () => {
-  const [fieldSize, setFieldSize] = useState<FieldSize>("9x9");
+  const [fieldSize, setFieldSize] = useState<FieldSize>(SizeOfField.Nine);
   const [data, setData] = useState<FieldData>();
   const [fullData, setFullData] = useState<FieldData>();
   const [loading, setLoading] = useState<boolean>(true);
