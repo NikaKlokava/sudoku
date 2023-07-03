@@ -3,22 +3,18 @@ import { Cell } from "./Cell";
 
 type Props = {
   value: SquareCells;
-  game: TypeOfGame;
+  size: number;
 };
 
-export const Square = ({ value, game }: Props) => {
+export const Square = ({ value, size }: Props) => {
   return (
     <div
       className={
-        game === "4x4"
-          ? cl.square4x4
-          : game === "6x6"
-          ? cl.square6x6
-          : cl.square9x9
+        size === 4 ? cl.square4x4 : size === 6 ? cl.square6x6 : cl.square9x9
       }
     >
       {value.map((elem: CellItem) => (
-        <Cell value={elem} game={game} key={`${elem.row}-${elem.column}`} />
+        <Cell value={elem} size={size} key={`${elem.row}-${elem.column}`} />
       ))}
     </div>
   );

@@ -3,12 +3,12 @@ import { CellWithInput } from "./CellWithInput";
 
 type Props = {
   value: CellItem;
-  game: TypeOfGame;
+  size: number;
 };
 
-export const Cell = ({ value, game }: Props) => {
+export const Cell = ({ value, size }: Props) => {
   if (value.num !== 0) {
     return <CellPrefilled value={value} />;
   }
-  return <CellWithInput value={value} game={game} />;
+  return <CellWithInput value={value} size={size} />;
 };
