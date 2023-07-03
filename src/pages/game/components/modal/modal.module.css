@@ -1,6 +1,6 @@
 .modal_wrapper:before {
   content: '';
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.8);
   position: fixed;
   left: 0;
   top: 0;
@@ -41,6 +41,12 @@
   width: 20px;
   height: 20px;
   cursor: pointer;
+}
+
+.buttons_container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .button {

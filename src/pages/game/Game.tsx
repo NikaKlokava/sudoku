@@ -1,11 +1,11 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Formik } from "formik";
 import cl from "./game.module.css";
 import { Field } from "./components/field";
 import { Footer, Header, Loader } from "../../shared/components";
 import { ModalWindow } from "./components/modal";
 import { NewGameBtn, SubmitBtn } from "./components/buttons";
-import { FieldGenerator } from "../../shared/utils/algorythm";
+import { getField } from "../../shared/utils/algorithm";
 import { SizeOfField } from "../../shared/utils/utils";
 
 export const Game = () => {
@@ -21,15 +21,15 @@ export const Game = () => {
 };
 
 const GameContent = () => {
-  const [fieldSize, setFieldSize] = useState<FieldSize>(SizeOfField.Nine);
   const [data, setData] = useState<FieldData>();
   const [fullData, setFullData] = useState<FieldData>();
+
   const [loading, setLoading] = useState<boolean>(true);
 
-  const [startGame, setStartGame] = useState<boolean>(false);
+  const [modalVisible, setModalVisible] = useState<boolean>(true);
 
   const loadGame = useCallback((size: FieldSize) => {
-    const field = new FieldGenerator(size).getField();
+    const field = getField(size);
 
     const fullData = field.generateCompletedField();
     const formatedFullData = field.formatData(fullData);
@@ -44,55 +44,68 @@ const GameContent = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleChangeValueClick = (size: FieldSize) => {
-    setFieldSize(size);
+  useEffect(() => {
+    loadGame(SizeOfField.Nine);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleCancelClick = () => {
+    setModalVisible(false);
+  };
+  const handleSubmitClick = (size: FieldSize) => {
+    setModalVisible(false);
+    loadGame(size);
   };
 
-  const handleStartGameClick = () => {
-    setStartGame(true);
-    loadGame(fieldSize);
-  };
+  if (loading || !data) return <Loader />;
 
   return (
     <>
-      {startGame ? (
+      <ModalWindow
+        visible={modalVisible}
+        onCancel={handleCancelClick}
+        onSubmit={handleSubmitClick}
+      />
+      <Formik
+        initialValues={data!}
+        validateOnChange={false}
+        enableReinitialize
+        onSubmit={(values: FieldData) => {
+          const isValid = JSON.stringify(values) === JSON.stringify(fullData);
+          alert(isValid ? "Valid" : "Invalid");
+        }}
+      >
         <>
-          {loading || !data ? (
-            <Loader />
-          ) : (
-            <Formik
-              initialValues={data}
-              validateOnChange={false}
-              enableReinitialize
-              onSubmit={(values: FieldData) => {
-                const isValid =
-                  JSON.stringify(values) === JSON.stringify(fullData);
-                alert(isValid ? "Valid" : "Invalid");
+          <Field data={data!} size={data!.length} />
+          <div className={cl.buttons_container}>
+            <SubmitBtn />
+            <NewGameBtn
+              onPress={() => {
+                setModalVisible(true);
               }}
-            >
-              <>
-                <Field data={data} size={fieldSize} />
-                <div className={cl.buttons_container}>
-                  <SubmitBtn />
-                  <NewGameBtn
-                    onPress={() => {
-                      setData([]);
-                      setLoading(true);
-                      setStartGame(false);
-                      loadGame(fieldSize);
-                    }}
-                  />
-                </div>
-              </>
-            </Formik>
-          )}
+            />
+          </div>
         </>
-      ) : (
-        <ModalWindow
-          changeValue={handleChangeValueClick}
-          onStartClick={handleStartGameClick}
-        />
-      )}
+      </Formik>
     </>
   );
 };
+
+/** Модалка должна быть всегда в ДОМе */
+/* <ModalWindow
+        visible={visible} <!-- вот это флаг и будет отвечать за видимость
+        onCancel добавь вот такой метод
+        onSubmit и вот такой (он будет передавать тип поля)
+
+        changeValue={handleChangeValueClick} это убраьт
+        onStartClick={handleStartGameClick}
+      /> */
+
+//  Желательно не делать так
+//            * Отдельно условие на показ формика
+//            * Отдельно условие на показ лоадера.
+//            * Лоадер сделать в виде ДИВа который в абсолюте занимает весь контейнер,
+//            *  посередине индикатор загрузки,
+//            *  а также делает затемнение заднего фона (opacity + black background).
+//            *
+//            * Это очень пригодится для нового алгоритма проверки данных

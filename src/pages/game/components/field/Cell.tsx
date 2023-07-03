@@ -3,7 +3,7 @@ import { CellWithInput } from "./CellWithInput";
 
 type Props = {
   value: CellItem;
-  size: FieldSize;
+  size: number;
 };
 
 export const Cell = ({ value, size }: Props) => {

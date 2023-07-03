@@ -1,6 +1,5 @@
 import { connect, FormikContextType } from "formik";
 import { Component } from "react";
-import { SizeOfField } from "../../../../shared/utils/utils";
 import cl from "./sudoku_field.module.css";
 
 const possibleNumbers = Array.from({ length: 9 }, (_, i) => i + 1); // [1, ... , 9]
@@ -15,8 +14,8 @@ type State = { squareIndex: number; cellIndex: number };
 class _CellWithInput extends Component<Props, State> {
   constructor(props: any) {
     super(props);
-    const game9x9 = props.size === SizeOfField.Nine;
-    const game4x4 = props.size === SizeOfField.Four;
+    const game9x9 = props.size === 9;
+    const game4x4 = props.size === 4;
     this.state = {
       squareIndex:
         Math.floor(props.value.row / (game9x9 ? 3 : 2)) * (game9x9 ? 3 : 2) +
