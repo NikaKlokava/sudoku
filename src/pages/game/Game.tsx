@@ -22,7 +22,6 @@ export const Game = () => {
 
 const GameContent = () => {
   const [data, setData] = useState<FieldData>();
-  const [fullData, setFullData] = useState<FieldData>();
 
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -32,12 +31,10 @@ const GameContent = () => {
     const field = getField(size);
 
     const fullData = field.generateCompletedField();
-    const formatedFullData = field.formatData(fullData);
-
-    setFullData(formatedFullData);
     field.removeRandomFieldNumbers(fullData);
 
     const data = field.formatData(fullData);
+
     setData(data);
     setLoading(false);
 
@@ -73,9 +70,9 @@ const GameContent = () => {
           validateOnChange={false}
           enableReinitialize
           onSubmit={(values: FieldData) => {
-            const isValid = JSON.stringify(values) === JSON.stringify(fullData);
-            checkField(values);
-            alert(isValid ? "Valid" : "Invalid");
+            const isFieldValid = checkField(values);
+            console.log(isFieldValid);
+            alert(isFieldValid ? "Valid" : "Invalid");
           }}
         >
           <>
