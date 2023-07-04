@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Formik } from "formik";
 import cl from "./game.module.css";
 import { Field } from "./components/field";
@@ -6,7 +6,7 @@ import { Footer, Header, Loader } from "../../shared/components";
 import { ModalWindow } from "./components/modal";
 import { NewGameBtn, SubmitBtn } from "./components/buttons";
 import { getField } from "../../shared/utils/algorithm";
-import { SizeOfField } from "../../shared/utils/utils";
+import { checkField } from "../../shared/utils/field-validation";
 
 export const Game = () => {
   return (
@@ -44,68 +44,53 @@ const GameContent = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    loadGame(SizeOfField.Nine);
+  const handleCancelClick = useCallback(() => {
+    setModalVisible(false);
+  }, []);
+
+  const handleSubmitClick = useCallback((size: FieldSize) => {
+    setModalVisible(false);
+    loadGame(size);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleCancelClick = () => {
-    setModalVisible(false);
-  };
-  const handleSubmitClick = (size: FieldSize) => {
-    setModalVisible(false);
-    loadGame(size);
-  };
-
-  if (loading || !data) return <Loader />;
-
-  return (
-    <>
+  if (modalVisible)
+    return (
       <ModalWindow
         visible={modalVisible}
         onCancel={handleCancelClick}
         onSubmit={handleSubmitClick}
       />
-      <Formik
-        initialValues={data!}
-        validateOnChange={false}
-        enableReinitialize
-        onSubmit={(values: FieldData) => {
-          const isValid = JSON.stringify(values) === JSON.stringify(fullData);
-          alert(isValid ? "Valid" : "Invalid");
-        }}
-      >
-        <>
-          <Field data={data!} size={data!.length} />
-          <div className={cl.buttons_container}>
-            <SubmitBtn />
-            <NewGameBtn
-              onPress={() => {
-                setModalVisible(true);
-              }}
-            />
-          </div>
-        </>
-      </Formik>
+    );
+
+  return (
+    <>
+      {!data || loading ? (
+        <Loader />
+      ) : (
+        <Formik
+          initialValues={data}
+          validateOnChange={false}
+          enableReinitialize
+          onSubmit={(values: FieldData) => {
+            const isValid = JSON.stringify(values) === JSON.stringify(fullData);
+            checkField(values);
+            alert(isValid ? "Valid" : "Invalid");
+          }}
+        >
+          <>
+            <Field data={data} size={data.length} />
+            <div className={cl.buttons_container}>
+              <SubmitBtn />
+              <NewGameBtn
+                onPress={() => {
+                  setModalVisible(true);
+                }}
+              />
+            </div>
+          </>
+        </Formik>
+      )}
     </>
   );
 };
-
-/** Модалка должна быть всегда в ДОМе */
-/* <ModalWindow
-        visible={visible} <!-- вот это флаг и будет отвечать за видимость
-        onCancel добавь вот такой метод
-        onSubmit и вот такой (он будет передавать тип поля)
-
-        changeValue={handleChangeValueClick} это убраьт
-        onStartClick={handleStartGameClick}
-      /> */
-
-//  Желательно не делать так
-//            * Отдельно условие на показ формика
-//            * Отдельно условие на показ лоадера.
-//            * Лоадер сделать в виде ДИВа который в абсолюте занимает весь контейнер,
-//            *  посередине индикатор загрузки,
-//            *  а также делает затемнение заднего фона (opacity + black background).
-//            *
-//            * Это очень пригодится для нового алгоритма проверки данных
