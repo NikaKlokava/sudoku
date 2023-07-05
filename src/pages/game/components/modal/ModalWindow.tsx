@@ -2,15 +2,20 @@ import { useState } from "react";
 import { MyButton } from "../../../../shared/components";
 import { SizeOfField } from "../../../../shared/utils/utils";
 import cl from "./modal.module.css";
+import { ModalItem } from "./ModalItem";
 
 type Props = {
   visible: boolean;
   onCancel?: () => void;
   onSubmit: (size: FieldSize) => void;
 };
-// примерно так https://dev.to/franciscomendes10866/how-to-create-a-modal-in-react-3coc
+
 export const ModalWindow = ({ visible, onCancel, onSubmit }: Props) => {
   const [fieldSize, setFieldSize] = useState<FieldSize>(SizeOfField.Nine);
+
+  const handleImgPress = (size: FieldSize) => {
+    setFieldSize(size);
+  };
 
   if (!visible) return null;
 
@@ -18,24 +23,15 @@ export const ModalWindow = ({ visible, onCancel, onSubmit }: Props) => {
     <div className={cl.modal_wrapper}>
       <div className={cl.modal_container}>
         <div className={cl.images_container}>
-          <img
-            className={cl.sudoku_img}
-            alt="9x9_game"
-            src="https://sudoku-puzzles.net/wp-content/puzzles/sudoku/easy/1.png"
-          />
-          <img
-            className={cl.sudoku_img}
-            alt="4x4_game"
-            src="https://sudoku-puzzles.net/wp-content/puzzles/sudoku-4x4/easy/1.png"
-          />
-          <img
-            className={cl.sudoku_img}
-            alt="6x6_game"
-            src="https://sudoku-puzzles.net/wp-content/puzzles/sudoku-6x6/medium/1.png"
-          />
+          <ModalItem onPress={() => handleImgPress(SizeOfField.Nine)} />
+          <ModalItem onPress={() => handleImgPress(SizeOfField.Four)} />
+          <ModalItem onPress={() => handleImgPress(SizeOfField.Six)} />
         </div>
-        <div className={cl.inputs_container}>
-          <input
+        <div className={cl.titles_container}>
+          <p className={cl.title}>{SizeOfField.Nine}</p>
+          <p className={cl.title}>{SizeOfField.Four}</p>
+          <p className={cl.title}>{SizeOfField.Six}</p>
+          {/* <input
             type="radio"
             name="game"
             className={cl.input}
@@ -53,7 +49,7 @@ export const ModalWindow = ({ visible, onCancel, onSubmit }: Props) => {
             name="game"
             className={cl.input}
             onClick={() => setFieldSize(SizeOfField.Six)}
-          />
+          /> */}
         </div>
         <div className={cl.buttons_container}>
           {onCancel && (
