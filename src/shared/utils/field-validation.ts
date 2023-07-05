@@ -11,59 +11,33 @@ const getArrayOfNumbers = (array: FieldData) => {
   });
 };
 
-const getArrayOfObjects = (array: FieldData) => {
-  return array.reduce((accum, curr) => {
-    return [...accum, ...curr];
-  }, []);
-};
+const getNumbersInColumnRow = (field: FieldData, type: Types) => {
+  let results = Array.from({ length: field.length }, () => new Array<number>());
 
-const getNumbersInColumnRow = (data: FieldData, type: Types) => {
-  const arrOfObjects = getArrayOfObjects(data); // concat all arrays of objects in one array of objects
-
-  let arrOfObjNumbers = [];
-
-  for (let i = 0; i < data.length; i++) {
-    const obj = arrOfObjects.filter((elem) => {
+  field.forEach((squareCell) => {
+    squareCell.forEach((cellItem) => {
       if (type === Types.row) {
-        if (elem.row === i) return elem;
-      } else {
-        if (elem.column === i) return elem;
-      }
-      return null;
+        results[cellItem.row].push(cellItem.num);
+      } else results[cellItem.column].push(cellItem.num);
     });
-    arrOfObjNumbers.push(obj);
-  }
-  return getArrayOfNumbers(arrOfObjNumbers);
+  });
+  return results;
 };
 
 const checkIfArrayIsUnique = (arr: any) => {
   return arr.length === new Set(arr).size;
 };
 
-const checkIfCellsIsEmpty = (array: number[][]) => {
-  return array.map((elem) => elem.includes(0)).includes(true) === false;
-};
-
 export const checkField = (data: FieldData) => {
   const numsInSquare = getArrayOfNumbers(data);
-  const numsInRows = getNumbersInColumnRow(data, Types.row);
-  const numsInColumn = getNumbersInColumnRow(data, Types.column);
-
-  const isNotEmpty = checkIfCellsIsEmpty(numsInSquare);
-
-  const isSquareValid = numsInSquare.map((elem) => {
-    return checkIfArrayIsUnique(elem);
-  });
-  const isRowValid = numsInRows.map((elem) => {
-    return checkIfArrayIsUnique(elem);
-  });
-  const isColumnValid = numsInColumn.map((elem) => {
-    return checkIfArrayIsUnique(elem);
-  });
-
-  const isFieldValid =
-    isSquareValid.concat(isRowValid).concat(isColumnValid).includes(false) ===
-    false;
-
-  return isNotEmpty && isFieldValid ? true : false;
+  const column = getNumbersInColumnRow(data, Types.column);
+  const row = getNumbersInColumnRow(data, Types.row);
+  if (!numsInSquare.map((el) => checkIfArrayIsUnique(el)).includes(false)) {
+    if (!column.map((el) => checkIfArrayIsUnique(el)).includes(false)) {
+      if (!row.map((el) => checkIfArrayIsUnique(el)).includes(false)) {
+        return true;
+      }
+    }
+  }
+  return false;
 };

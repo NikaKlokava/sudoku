@@ -5,12 +5,14 @@ import cl from "./modal.module.css";
 
 type Props = {
   visible: boolean;
-  onCancel: () => void;
+  onCancel?: () => void;
   onSubmit: (size: FieldSize) => void;
 };
 // примерно так https://dev.to/franciscomendes10866/how-to-create-a-modal-in-react-3coc
 export const ModalWindow = ({ visible, onCancel, onSubmit }: Props) => {
   const [fieldSize, setFieldSize] = useState<FieldSize>(SizeOfField.Nine);
+
+  if (!visible) return null;
 
   return (
     <div className={cl.modal_wrapper}>
@@ -54,7 +56,9 @@ export const ModalWindow = ({ visible, onCancel, onSubmit }: Props) => {
           />
         </div>
         <div className={cl.buttons_container}>
-          <MyButton text="Cancel" className={cl.button} onClick={onCancel} />
+          {onCancel && (
+            <MyButton text="Cancel" className={cl.button} onClick={onCancel} />
+          )}
           <MyButton
             text="Start game"
             className={cl.button}
