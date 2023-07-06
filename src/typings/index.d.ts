@@ -12,3 +12,5 @@ declare type SquareCells = CellItem[];
 declare type FieldData = SquareCells[];
 
 declare type FieldSize = "9x9" | "4x4" | "6x6";
+
+declare type Difficulty = "easy" | "medium" | "hard" | "impossible";

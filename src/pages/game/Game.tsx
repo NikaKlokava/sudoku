@@ -29,7 +29,7 @@ const GameContent = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(true);
   const fieldSize = useRef<number>(0);
 
-  const loadGame = useCallback((size: FieldSize) => {
+  const loadGame = useCallback((size: FieldSize, difficulty: Difficulty) => {
     fieldSize.current += 1;
     const field = getField(size);
 
@@ -48,11 +48,15 @@ const GameContent = () => {
     setModalVisible(false);
   }, []);
 
-  const handleSubmitClick = useCallback((size: FieldSize) => {
-    setModalVisible(false);
-    loadGame(size);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const handleSubmitClick = useCallback(
+    (size: FieldSize, difficulty: Difficulty) => {
+      console.log(difficulty);
+      setModalVisible(false);
+      loadGame(size, difficulty);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    []
+  );
 
   const validationSchema = yup.array().of(
     yup.array().of(
