@@ -36,25 +36,6 @@ export const ModalWindow = ({ visible, onCancel, onSubmit }: Props) => {
           <p className={cl.title}>{SizeOfField.Nine}</p>
           <p className={cl.title}>{SizeOfField.Four}</p>
           <p className={cl.title}>{SizeOfField.Six}</p>
-          {/* <input
-            type="radio"
-            name="game"
-            className={cl.input}
-            onClick={() => setFieldSize(SizeOfField.Nine)}
-            defaultChecked
-          />
-          <input
-            type="radio"
-            name="game"
-            className={cl.input}
-            onClick={() => setFieldSize(SizeOfField.Four)}
-          />
-          <input
-            type="radio"
-            name="game"
-            className={cl.input}
-            onClick={() => setFieldSize(SizeOfField.Six)}
-          /> */}
         </div>
         <div className={cl.buttons_container}>
           {onCancel && (
