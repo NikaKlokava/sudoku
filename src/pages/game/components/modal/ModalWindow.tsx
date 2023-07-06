@@ -13,19 +13,24 @@ type Props = {
 export const ModalWindow = ({ visible, onCancel, onSubmit }: Props) => {
   const [fieldSize, setFieldSize] = useState<FieldSize>(SizeOfField.Nine);
 
-  const handleImgPress = (size: FieldSize) => {
-    setFieldSize(size);
-  };
-
   if (!visible) return null;
 
   return (
     <div className={cl.modal_wrapper}>
       <div className={cl.modal_container}>
         <div className={cl.images_container}>
-          <ModalItem onPress={() => handleImgPress(SizeOfField.Nine)} />
-          <ModalItem onPress={() => handleImgPress(SizeOfField.Four)} />
-          <ModalItem onPress={() => handleImgPress(SizeOfField.Six)} />
+          <ModalItem
+            onPress={() => setFieldSize(SizeOfField.Nine)}
+            size={fieldSize === SizeOfField.Nine ? fieldSize : undefined}
+          />
+          <ModalItem
+            onPress={() => setFieldSize(SizeOfField.Four)}
+            size={fieldSize === SizeOfField.Four ? fieldSize : undefined}
+          />
+          <ModalItem
+            onPress={() => setFieldSize(SizeOfField.Six)}
+            size={fieldSize === SizeOfField.Six ? fieldSize : undefined}
+          />
         </div>
         <div className={cl.titles_container}>
           <p className={cl.title}>{SizeOfField.Nine}</p>
