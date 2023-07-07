@@ -5,15 +5,15 @@ import {
 } from "./utils";
 
 type Props = {
-  fillingOrder: Array<[row: number, column: number]>;
-  squaresInRow: any;
-  squaresInColumn: any;
-  rowsInSquare: any;
-  columnsInSquare: any;
-  numberToRemove: any;
+  fillingOrder: number[][];
+  squaresInRow: number;
+  squaresInColumn: number;
+  rowsInSquare: number;
+  columnsInSquare: number;
+  numberToRemove: number;
 };
 
-export abstract class AbstractField {
+export class Field {
   props: Props;
   data: FieldType;
 
@@ -100,7 +100,7 @@ export abstract class AbstractField {
     });
   };
 
-  public generateCompletedField(): FieldType {
+  private generateCompletedField(): FieldType {
     for (
       let sqIndex = 0;
       sqIndex < this.props.fillingOrder.length;
@@ -134,8 +134,9 @@ export abstract class AbstractField {
     return this.data;
   }
 
-  public removeRandomFieldNumbers(data: FieldType): void {
-    while (this.props.numberToRemove !== 0) {
+  private removeRandomFieldNumbers(): void {
+    let removeNums = this.props.numberToRemove;
+    while (removeNums !== 0) {
       const [gRow, column] = Array.from(Array(6)).map(() =>
         Math.floor(Math.random() * this.props.squaresInColumn)
       );
@@ -143,17 +144,17 @@ export abstract class AbstractField {
         Math.floor(Math.random() * this.props.squaresInRow)
       );
 
-      if (data[gRow][gColumn][row][column] !== 0) {
-        this.props.numberToRemove--;
-        data[gRow][gColumn][row][column] = 0;
+      if (this.data[gRow][gColumn][row][column] !== 0) {
+        removeNums--;
+        this.data[gRow][gColumn][row][column] = 0;
       }
     }
 
     return;
   }
 
-  public formatData(data: FieldType): FieldData {
-    const newArray = data.reduce(
+  private formatData(): FieldData {
+    const newArray = this.data.reduce(
       (accumulator: any, currentValue: any, gRowIndex: number) => {
         const newValue = currentValue.reduce(
           (accum: SquareCells, current: SquareType, gColumnIndex: number) => {
@@ -180,5 +181,12 @@ export abstract class AbstractField {
       []
     );
     return newArray;
+  }
+
+  public generatePlayfieldData() {
+    this.generateCompletedField();
+    this.removeRandomFieldNumbers();
+
+    return this.formatData();
   }
 }

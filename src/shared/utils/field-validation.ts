@@ -30,14 +30,21 @@ const checkIfArrayIsUnique = (arr: any) => {
 
 export const checkField = (data: FieldData) => {
   const numsInSquare = getArrayOfNumbers(data);
+  const checkSquare = numsInSquare
+    .map((el) => checkIfArrayIsUnique(el))
+    .includes(false);
+  if (checkSquare) return false;
+
   const column = getNumbersInColumnRow(data, Types.column);
+  const checkColumn = column
+    .map((el) => checkIfArrayIsUnique(el))
+    .includes(false);
+  if (checkColumn) return false;
+
   const row = getNumbersInColumnRow(data, Types.row);
-  if (!numsInSquare.map((el) => checkIfArrayIsUnique(el)).includes(false)) {
-    if (!column.map((el) => checkIfArrayIsUnique(el)).includes(false)) {
-      if (!row.map((el) => checkIfArrayIsUnique(el)).includes(false)) {
-        return true;
-      }
-    }
-  }
-  return false;
+  const checkRow = row.map((el) => checkIfArrayIsUnique(el)).includes(false);
+
+  if (checkRow) return false;
+
+  return true;
 };

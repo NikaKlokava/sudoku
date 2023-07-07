@@ -1,14 +1,16 @@
+import classnames from "classnames";
 import { Square } from "./Square";
 import cl from "./sudoku_field.module.css";
 type Props = {
   data: FieldData;
   size: number;
+  gameResult: boolean | undefined;
 };
 
-export const Field = ({ data, size }: Props) => {
+export const Field = ({ data, size, gameResult }: Props) => {
   return (
     <div
-      className={size === 9 ? cl.grid9x9 : size === 6 ? cl.grid6x6 : cl.grid4x4}
+      className={classnames([cl[`grid_${size}`]], [cl[`result_${gameResult}`]])}
     >
       {data.map((arr: SquareCells) => (
         <Square

@@ -3,6 +3,9 @@ import { MyButton } from "../../../../shared/components";
 import { SizeOfField } from "../../../../shared/utils/utils";
 import cl from "./modal.module.css";
 import { ModalItem } from "./ModalItem";
+import img9x9 from "../../../../assets/sudoku_9x9.png";
+import img6x6 from "../../../../assets/sudoku_6x6.png";
+import img4x4 from "../../../../assets/sudoku_4x4.png";
 
 type Props = {
   visible: boolean;
@@ -16,26 +19,28 @@ export const ModalWindow = ({ visible, onCancel, onSubmit }: Props) => {
   if (!visible) return null;
 
   return (
-    <div className={cl.modal_wrapper}>
+    <>
+      <div className={cl.modal_wrapper} onClick={onCancel}></div>
       <div className={cl.modal_container}>
-        <div className={cl.images_container}>
+        <div className={cl.items_container}>
           <ModalItem
             onPress={() => setFieldSize(SizeOfField.Nine)}
-            size={fieldSize === SizeOfField.Nine ? fieldSize : undefined}
+            active={fieldSize === SizeOfField.Nine}
+            title={SizeOfField.Nine}
+            img={img9x9}
           />
           <ModalItem
             onPress={() => setFieldSize(SizeOfField.Four)}
-            size={fieldSize === SizeOfField.Four ? fieldSize : undefined}
+            active={fieldSize === SizeOfField.Four}
+            title={SizeOfField.Four}
+            img={img6x6}
           />
           <ModalItem
             onPress={() => setFieldSize(SizeOfField.Six)}
-            size={fieldSize === SizeOfField.Six ? fieldSize : undefined}
+            active={fieldSize === SizeOfField.Six}
+            title={SizeOfField.Six}
+            img={img4x4}
           />
-        </div>
-        <div className={cl.titles_container}>
-          <p className={cl.title}>{SizeOfField.Nine}</p>
-          <p className={cl.title}>{SizeOfField.Four}</p>
-          <p className={cl.title}>{SizeOfField.Six}</p>
         </div>
         <div className={cl.buttons_container}>
           {onCancel && (
@@ -48,6 +53,6 @@ export const ModalWindow = ({ visible, onCancel, onSubmit }: Props) => {
           />
         </div>
       </div>
-    </div>
+    </>
   );
 };

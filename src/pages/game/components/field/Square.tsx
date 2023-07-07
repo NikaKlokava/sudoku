@@ -8,11 +8,7 @@ type Props = {
 
 export const Square = ({ value, size }: Props) => {
   return (
-    <div
-      className={
-        size === 4 ? cl.square4x4 : size === 6 ? cl.square6x6 : cl.square9x9
-      }
-    >
+    <div className={cl[`square_${size}`]}>
       {value.map((elem: CellItem) => (
         <Cell value={elem} size={size} key={`${elem.row}-${elem.column}`} />
       ))}
