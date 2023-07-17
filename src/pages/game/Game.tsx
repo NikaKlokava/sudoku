@@ -59,6 +59,10 @@ const GameContent = () => {
     loadGame(size);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  
+  const handleResultChange = useCallback(() => {
+    setGameResult(undefined);
+  }, []);
 
   return (
     <>
@@ -74,7 +78,7 @@ const GameContent = () => {
             validationSchema.isValid(values);
             const isFieldValid = checkField(values);
             setGameResult(isFieldValid);
-            // alert(isFieldValid ? "Valid" : "Invalid");
+            setModalVisible(true);
           }}
         >
           <>
@@ -84,6 +88,7 @@ const GameContent = () => {
               <NewGameBtn
                 onPress={() => {
                   setModalVisible(true);
+                  setGameResult(undefined);
                 }}
               />
             </div>
@@ -92,8 +97,10 @@ const GameContent = () => {
       )}
       <ModalWindow
         visible={modalVisible}
+        result={gameResult}
         onCancel={data ? handleCancelClick : undefined}
         onSubmit={handleSubmitClick}
+        onResult={handleResultChange}
       />
     </>
   );
