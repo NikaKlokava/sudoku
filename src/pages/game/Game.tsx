@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Formik } from "formik";
 import cl from "./game.module.css";
 import { Field } from "./components/field";
@@ -32,11 +32,26 @@ const validationSchema = yup.array().of(
 );
 
 const GameContent = () => {
-  const [data, setData] = useState<FieldData>();
+  const [data, setData] = useState<{
+    generated: FieldData;
+    filled: FieldData;
+  }>();
+
   const [loading, setLoading] = useState<boolean>(true);
   const [modalVisible, setModalVisible] = useState<boolean>(true);
   const [gameResult, setGameResult] = useState<boolean | undefined>();
   const fieldNumberRef = useRef<number>(0);
+
+  useEffect(() => {
+    const generatedData = JSON.parse(localStorage.getItem("generatedData")!);
+    const filledData = JSON.parse(localStorage.getItem("filledData")!);
+
+    if (generatedData) {
+      setData({ generated: generatedData, filled: filledData });
+      setLoading(false);
+      setModalVisible(false);
+    }
+  }, []);
 
   const loadGame = useCallback((size: FieldSize) => {
     fieldNumberRef.current += 1;
@@ -44,7 +59,7 @@ const GameContent = () => {
     const field = getField(size);
     const data = field.generatePlayfieldData();
 
-    setData(data);
+    setData({ generated: data, filled: data });
     setLoading(false);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,7 +74,7 @@ const GameContent = () => {
     loadGame(size);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
   const handleResultChange = useCallback(() => {
     setGameResult(undefined);
   }, []);
@@ -70,7 +85,7 @@ const GameContent = () => {
       {data && (
         <Formik
           key={fieldNumberRef.current}
-          initialValues={data}
+          initialValues={data.filled} 
           validateOnChange={false}
           validationSchema={validationSchema}
           enableReinitialize
@@ -82,7 +97,7 @@ const GameContent = () => {
           }}
         >
           <>
-            <Field data={data} size={data.length} gameResult={gameResult} />
+            <Field data={data.generated} size={data.generated.length} />
             <div className={cl.buttons_container}>
               <SubmitBtn />
               <NewGameBtn
@@ -98,7 +113,7 @@ const GameContent = () => {
       <ModalWindow
         visible={modalVisible}
         result={gameResult}
-        onCancel={data ? handleCancelClick : undefined}
+        onCancel={data?.generated ? handleCancelClick : undefined}
         onSubmit={handleSubmitClick}
         onResult={handleResultChange}
       />

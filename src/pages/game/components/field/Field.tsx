@@ -3,10 +3,11 @@ import cl from "./sudoku_field.module.css";
 type Props = {
   data: FieldData;
   size: number;
-  gameResult: boolean | undefined;
 };
 
-export const Field = ({ data, size, gameResult }: Props) => {
+export const Field = ({ data, size }: Props) => {
+  localStorage.setItem("generatedData", JSON.stringify(data));
+
   return (
     <div className={cl[`grid_${size}`]}>
       {data.map((arr: SquareCells) => (

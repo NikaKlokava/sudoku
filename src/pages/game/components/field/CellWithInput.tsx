@@ -62,6 +62,8 @@ class _CellWithInput extends Component<Props, State> {
         ? ""
         : formik.values[squareIndex][cellIndex].num;
 
+    localStorage.setItem("filledData", JSON.stringify(formik.values));
+
     return (
       <input
         className={cl.cell}
