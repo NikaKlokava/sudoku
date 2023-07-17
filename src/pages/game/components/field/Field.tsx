@@ -1,4 +1,3 @@
-import classnames from "classnames";
 import { Square } from "./Square";
 import cl from "./sudoku_field.module.css";
 type Props = {
@@ -9,9 +8,7 @@ type Props = {
 
 export const Field = ({ data, size, gameResult }: Props) => {
   return (
-    <div
-      className={classnames([cl[`grid_${size}`]], [cl[`result_${gameResult}`]])}
-    >
+    <div className={cl[`grid_${size}`]}>
       {data.map((arr: SquareCells) => (
         <Square
           value={arr}
