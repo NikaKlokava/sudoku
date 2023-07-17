@@ -6,10 +6,10 @@ type Props = {
 };
 
 export const Field = ({ data, size }: Props) => {
+  localStorage.setItem("generatedData", JSON.stringify(data));
+
   return (
-    <div
-      className={size === 9 ? cl.grid9x9 : size === 6 ? cl.grid6x6 : cl.grid4x4}
-    >
+    <div className={cl[`grid_${size}`]}>
       {data.map((arr: SquareCells) => (
         <Square
           value={arr}

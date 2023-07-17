@@ -32,27 +32,51 @@
 }
 
 .active {
-  box-shadow: 0px 0px 9px 5px rgba(37, 100, 156, 0.792);
+  box-shadow: 0px 0px 2px 7px rgba(58, 184, 226, 0.469);
   transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.images_container,
-.titles_container {
-  display: flex;
-  justify-content: space-around;
-  column-gap: 20px;
+.items_container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
+  grid-auto-flow: column;
+  gap: 20px;
+  justify-items: center;
 }
 
-.title {
+.title,
+.result_title {
   font-family: 'Source Code Pro', monospace;
   font-size: 20px;
   color: rgb(6, 64, 83);
-  text-shadow: 0px 1px 1px rgb(6, 64, 83);
+  text-shadow: 0px 1px 1px #064053;
   margin: 0px;
+}
+
+.result_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 20px;
+}
+
+.result_img_true {
+  width: 100px;
+  height: 100px;
+  background-image: url("../../../../assets/win.svg");
+}
+
+.result_img_false {
+  width: 100px;
+  height: 100px;
+  background-image: url("../../../../assets/fail.svg");
 }
 
 .buttons_container {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  column-gap: 10px;
 }
