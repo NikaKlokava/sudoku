@@ -4,6 +4,13 @@ export enum SizeOfField {
   Four = "4x4",
 }
 
+export enum Difficulty {
+  easy = "easy",
+  medium = "medium",
+  hard = "hard",
+  impossible = "impossible"
+}
+
 export const shuffleNumbersArray = (array: number[]) => {
   array.sort(() => Math.random() - 0.5);
 };

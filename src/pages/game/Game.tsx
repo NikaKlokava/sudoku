@@ -46,34 +46,40 @@ const GameContent = () => {
     const generatedData = JSON.parse(localStorage.getItem("generatedData")!);
     const filledData = JSON.parse(localStorage.getItem("filledData")!);
 
-    if (generatedData) {
+    if (filledData) {
       setData({ generated: generatedData, filled: filledData });
       setLoading(false);
       setModalVisible(false);
     }
   }, []);
 
-  const loadGame = useCallback((size: FieldSize) => {
-    fieldNumberRef.current += 1;
+  const loadGame = useCallback(
+    (size: FieldSize, difficulty: GameDifficulty) => {
+      fieldNumberRef.current += 1;
 
-    const field = getField(size);
-    const data = field.generatePlayfieldData();
+      const field = getField(size, difficulty);
+      const data = field.generatePlayfieldData();
 
-    setData({ generated: data, filled: data });
-    setLoading(false);
+      setData({ generated: data, filled: data });
+      setLoading(false);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    []
+  );
 
   const handleCancelClick = useCallback(() => {
     setModalVisible(false);
   }, []);
 
-  const handleSubmitClick = useCallback((size: FieldSize) => {
-    setModalVisible(false);
-    loadGame(size);
+  const handleSubmitClick = useCallback(
+    (size: FieldSize, difficulty: GameDifficulty) => {
+      setModalVisible(false);
+      loadGame(size, difficulty);
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    []
+  );
 
   const handleResultChange = useCallback(() => {
     setGameResult(undefined);
@@ -85,7 +91,7 @@ const GameContent = () => {
       {data && (
         <Formik
           key={fieldNumberRef.current}
-          initialValues={data.filled} 
+          initialValues={data.filled}
           validateOnChange={false}
           validationSchema={validationSchema}
           enableReinitialize

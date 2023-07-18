@@ -1,5 +1,5 @@
 import { Field } from "./abstract-field";
-import { SizeOfField } from "./utils";
+import { Difficulty, SizeOfField } from "./utils";
 
 const field = {
   [SizeOfField.Nine]: {
@@ -18,7 +18,7 @@ const field = {
     squaresInColumn: 3,
     rowsInSquare: 3,
     columnsInSquare: 3,
-    numberToRemove: 44,
+    numberToRemove: 0,
   },
   [SizeOfField.Six]: {
     fillingOrder: [
@@ -32,7 +32,7 @@ const field = {
     squaresInRow: 2,
     squaresInColumn: 3,
     rowsInSquare: 2,
-    numberToRemove: 14,
+    numberToRemove: 0,
     columnsInSquare: 3,
   },
   [SizeOfField.Four]: {
@@ -46,10 +46,34 @@ const field = {
     squaresInColumn: 2,
     rowsInSquare: 2,
     columnsInSquare: 2,
-    numberToRemove: 7,
+    numberToRemove: 0,
   },
 };
 
-export const getField = (size: FieldSize) => {
+const type = {
+  [Difficulty.easy]: {
+    [SizeOfField.Nine]: 20,
+    [SizeOfField.Six]: 10,
+    [SizeOfField.Four]: 4,
+  },
+  [Difficulty.medium]: {
+    [SizeOfField.Nine]: 35,
+    [SizeOfField.Six]: 15,
+    [SizeOfField.Four]: 8,
+  },
+  [Difficulty.hard]: {
+    [SizeOfField.Nine]: 50,
+    [SizeOfField.Six]: 25,
+    [SizeOfField.Four]: 10,
+  },
+  [Difficulty.impossible]: {
+    [SizeOfField.Nine]: 75,
+    [SizeOfField.Six]: 30,
+    [SizeOfField.Four]: 12,
+  },
+};
+
+export const getField = (size: FieldSize, difficulty: GameDifficulty) => {
+  field[size].numberToRemove = type[difficulty][size];
   return new Field(field[size]);
 };

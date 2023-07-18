@@ -36,7 +36,7 @@
   transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.items_container {
+.field_size_container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, auto);
@@ -52,6 +52,30 @@
   color: rgb(6, 64, 83);
   text-shadow: 0px 1px 1px #064053;
   margin: 0px;
+}
+
+.difficulty_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.difficulty_item {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 20px;
+  color: rgba(6, 64, 83, 0.387);
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.difficulty_item:hover {
+  color: rgb(6, 64, 83);
+}
+
+.active_item {
+  color: rgb(6, 64, 83);
+  box-shadow: 0px 3px 0px 0px rgba(58, 184, 226, 0.469);
 }
 
 .result_container {

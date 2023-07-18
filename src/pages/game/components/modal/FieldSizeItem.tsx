@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import cl from "./modal.module.css";
 
 type Props = {
@@ -7,13 +8,12 @@ type Props = {
   img: string;
 };
 
-export const ModalItem = ({ onPress, active, title, img }: Props) => {
+export const FieldSizeItem = ({ onPress, active, title, img }: Props) => {
+  const activeClass = { [cl[`active`]]: active };
   return (
     <>
       <img
-        className={
-          active ? `${cl.sudoku_img} ${cl.active}` : `${cl.sudoku_img}`
-        }
+        className={classNames(cl.sudoku_img, activeClass)}
         alt="game_img"
         src={img}
         onClick={onPress}
