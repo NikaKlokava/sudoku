@@ -1,2 +1,2 @@
 export * from "./ModalWindow";
-export * from "./ModalItem";
+export * from "./FieldSizeItem";
