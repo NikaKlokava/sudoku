@@ -24,7 +24,7 @@ const getNumbersInColumnRow = (field: FieldData, type: Types) => {
   return results;
 };
 
-const checkIfArrayIsUnique = (arr: any) => {
+const checkIfArrayIsUnique = (arr: number[]) => {
   return arr.length === new Set(arr).size;
 };
 
