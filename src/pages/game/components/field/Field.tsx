@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Square } from "./Square";
 import cl from "./sudoku_field.module.css";
 type Props = {
@@ -5,7 +6,7 @@ type Props = {
   size: number;
 };
 
-export const Field = ({ data, size }: Props) => {
+export const Field = memo(({ data, size }: Props) => {
   localStorage.setItem("generatedData", JSON.stringify(data));
 
   return (
@@ -19,4 +20,4 @@ export const Field = ({ data, size }: Props) => {
       ))}
     </div>
   );
-};
+});

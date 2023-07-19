@@ -104,3 +104,27 @@
   align-items: center;
   column-gap: 10px;
 }
+
+@media screen and (max-width: 600px) {
+  .modal_container {
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgb(137, 187, 204);
+  }
+
+  .sudoku_img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .field_size_container {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(6, auto);
+    gap: 10px;
+  }
+
+  .title,
+  .result_title,
+  .difficulty_item {
+    font-size: 18px;
+  }
+}
