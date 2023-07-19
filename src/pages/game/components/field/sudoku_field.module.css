@@ -72,3 +72,32 @@
 .result_false {
   box-shadow: 0px 0px 12px 7px rgba(151, 40, 36, 0.765);
 }
+
+
+@media screen and (max-width:600px) {
+
+  .square_9 {
+    grid-template-columns: repeat(3, 35px);
+    grid-template-rows: repeat(3, 35px);
+  }
+
+  .grid_9 {
+    grid-template-columns: repeat(3, 105px);
+    grid-template-rows: repeat(3, 105px);
+  }
+
+  .square_6 {
+    grid-template-columns: repeat(3, 45px);
+    grid-template-rows: repeat(2, 45px);
+  }
+
+  .grid_6 {
+    grid-template-columns: repeat(2, 135px);
+    grid-template-rows: repeat(3, 90px);
+  }
+
+  .cell {
+    font-size: 22px;
+  }
+
+}

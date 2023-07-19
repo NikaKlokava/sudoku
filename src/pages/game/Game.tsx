@@ -31,6 +31,19 @@ const validationSchema = yup.array().of(
   )
 );
 
+// const err = (values: any) => {
+//   let errors ;
+//   errors = values
+//   if(!values.password){
+//     errors.password = 'Enter a password'
+//   } else if(values.password.length < 8){
+//     errors.password = 'Enter at least 8 characters for your password'
+//   }
+//   console.log("The length of errors.password: " + values.password.length);
+
+//   return errors;
+// }
+
 const GameContent = () => {
   const [data, setData] = useState<{
     generated: FieldData;
@@ -46,7 +59,7 @@ const GameContent = () => {
     const generatedData = JSON.parse(localStorage.getItem("generatedData")!);
     const filledData = JSON.parse(localStorage.getItem("filledData")!);
 
-    if (filledData) {
+    if (generatedData) {
       setData({ generated: generatedData, filled: filledData });
       setLoading(false);
       setModalVisible(false);
@@ -91,7 +104,8 @@ const GameContent = () => {
       {data && (
         <Formik
           key={fieldNumberRef.current}
-          initialValues={data.filled}
+          initialValues={data.generated}
+          // initialValues={data.filled}
           validateOnChange={false}
           validationSchema={validationSchema}
           enableReinitialize
@@ -110,6 +124,7 @@ const GameContent = () => {
                 onPress={() => {
                   setModalVisible(true);
                   setGameResult(undefined);
+                  localStorage.removeItem("filledData");
                 }}
               />
             </div>
