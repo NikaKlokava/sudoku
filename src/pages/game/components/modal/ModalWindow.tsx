@@ -8,17 +8,18 @@ import img9x9 from "../../../../assets/sudoku_9x9.png";
 import img6x6 from "../../../../assets/sudoku_6x6.png";
 import img4x4 from "../../../../assets/sudoku_4x4.png";
 import cl from "./modal.module.css";
+import { NewGameBtn } from "../buttons";
 
 type Props = {
   visible: boolean;
   result: boolean | undefined;
   onCancel?: () => void;
-  onSubmit: (size: FieldSize, difficulty: GameDifficulty) => void;
-  onResult: () => void;
+  onStart: (size: FieldSize, difficulty: GameDifficulty) => void;
+  onNewGame: () => void;
 };
 
 export const ModalWindow = memo(
-  ({ visible, result, onCancel, onSubmit, onResult }: Props) => {
+  ({ visible, result, onCancel, onStart, onNewGame }: Props) => {
     const [fieldSize, setFieldSize] = useState<FieldSize>(SizeOfField.Nine);
     const [difficulty, setDifficulty] = useState<GameDifficulty>(
       Difficulty.easy
@@ -85,7 +86,7 @@ export const ModalWindow = memo(
                 <MyButton
                   text="Start game"
                   className={cl.button}
-                  onClick={() => onSubmit(fieldSize, difficulty)}
+                  onClick={() => onStart(fieldSize, difficulty)}
                 />
               </div>
             </>
@@ -98,9 +99,9 @@ export const ModalWindow = memo(
               <div className={cl[`result_img_${result}`]}></div>
               <div className={cl.buttons_container}>
                 {isEqual(result, false) && (
-                  <MyButton text="Correct" onClick={onCancel} />
+                  <MyButton text="Close" onClick={onCancel} />
                 )}
-                <MyButton text="New Game" onClick={onResult} />
+                <NewGameBtn onPress={onNewGame} />
               </div>
             </div>
           )}

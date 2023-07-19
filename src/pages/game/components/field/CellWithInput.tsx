@@ -11,7 +11,6 @@ type Props = {
 type State = { squareIndex: number; cellIndex: number };
 
 class _CellWithInput extends Component<Props, State> {
-  filledData: FieldData;
   possibleNumbers: number[];
 
   constructor(props: Props) {
@@ -31,8 +30,6 @@ class _CellWithInput extends Component<Props, State> {
           (game4x4 ? 2 : 3) -
           props.value.column),
     };
-    this.filledData = JSON.parse(localStorage.getItem("filledData")!);
-    this.filledData && this.props.formik.setValues(this.filledData);
   }
 
   shouldComponentUpdate(nextProps: Readonly<Props>): boolean {

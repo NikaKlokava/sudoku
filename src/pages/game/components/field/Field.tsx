@@ -1,4 +1,5 @@
-import { memo } from "react";
+import { useFormikContext } from "formik";
+import { memo, useEffect } from "react";
 import { Square } from "./Square";
 import cl from "./sudoku_field.module.css";
 type Props = {
@@ -7,7 +8,12 @@ type Props = {
 };
 
 export const Field = memo(({ data, size }: Props) => {
-  localStorage.setItem("generatedData", JSON.stringify(data));
+  const { setValues } = useFormikContext();
+
+  useEffect(() => {
+    const filledData = JSON.parse(localStorage.getItem("filledData")!);
+    filledData && setValues(filledData);
+  }, [setValues]);
 
   return (
     <div className={cl[`grid_${size}`]}>
