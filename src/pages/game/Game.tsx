@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Formik } from "formik";
-import cl from "./game.module.css";
 import { Field } from "./components/field";
 import { Footer, Header, Loader } from "../../shared/components";
 import { ModalWindow } from "./components/modal";
@@ -8,6 +7,7 @@ import { NewGameBtn, SubmitBtn } from "./components/buttons";
 import { getField } from "../../shared/utils/algorythm";
 import { checkField } from "../../shared/utils/field-validation";
 import * as yup from "yup";
+import cl from "./game.module.css";
 
 export const Game = () => {
   return (
@@ -38,7 +38,7 @@ const GameContent = () => {
   }>();
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [modalVisible, setModalVisible] = useState<boolean>(true);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [gameResult, setGameResult] = useState<boolean | undefined>();
   const fieldNumberRef = useRef<number>(0);
 
@@ -49,42 +49,40 @@ const GameContent = () => {
     if (generatedData) {
       setData({ generated: generatedData, filled: filledData });
       setLoading(false);
-      setModalVisible(false);
+    } else {
+      setModalVisible(true);
     }
   }, []);
 
-  const loadGame = useCallback(
-    (size: FieldSize, difficulty: GameDifficulty) => {
-      fieldNumberRef.current += 1;
-
-      const field = getField(size, difficulty);
-      const data = field.generatePlayfieldData();
-
-      setData({ generated: data, filled: data });
-      setLoading(false);
-
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },
-    []
-  );
-
-  const handleCancelClick = useCallback(() => {
-    setModalVisible(false);
-  }, []);
-
-  const handleSubmitClick = useCallback(
-    (size: FieldSize, difficulty: GameDifficulty) => {
-      setModalVisible(false);
-      loadGame(size, difficulty);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
-
-  const handleResultChange = useCallback(() => {
+  const loadGame = (size: FieldSize, difficulty: GameDifficulty) => {
+    fieldNumberRef.current += 1;
     localStorage.removeItem("filledData");
+
+    const field = getField(size, difficulty);
+    const data = field.generatePlayfieldData();
+
+    localStorage.setItem("generatedData", JSON.stringify(data));
+
+    setData({ generated: data, filled: data });
+    setLoading(false);
+  };
+
+  const handleCancelClick = () => {
+    setModalVisible(false);
+  };
+
+  const handleStartGameClick = (
+    size: FieldSize,
+    difficulty: GameDifficulty
+  ) => {
+    setModalVisible(false);
+    loadGame(size, difficulty);
+  };
+
+  const handleNewGameClick = () => {
+    setModalVisible(true);
     setGameResult(undefined);
-  }, []);
+  };
 
   return (
     <>
@@ -93,7 +91,6 @@ const GameContent = () => {
         <Formik
           key={fieldNumberRef.current}
           initialValues={data.generated}
-          // initialValues={data.filled}
           validateOnChange={false}
           validationSchema={validationSchema}
           enableReinitialize
@@ -108,13 +105,7 @@ const GameContent = () => {
             <Field data={data.generated} size={data.generated.length} />
             <div className={cl.buttons_container}>
               <SubmitBtn />
-              <NewGameBtn
-                onPress={() => {
-                  setModalVisible(true);
-                  setGameResult(undefined);
-                  localStorage.removeItem("filledData");
-                }}
-              />
+              <NewGameBtn onPress={handleNewGameClick} />
             </div>
           </>
         </Formik>
@@ -122,9 +113,9 @@ const GameContent = () => {
       <ModalWindow
         visible={modalVisible}
         result={gameResult}
-        onCancel={data?.generated ? handleCancelClick : undefined}
-        onSubmit={handleSubmitClick}
-        onResult={handleResultChange}
+        onCancel={data?.generated && handleCancelClick}
+        onStart={handleStartGameClick}
+        onNewGame={handleNewGameClick}
       />
     </>
   );
