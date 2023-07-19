@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Formik } from "formik";
-import cl from "./game.module.css";
 import { Field } from "./components/field";
 import { Footer, Header, Loader } from "../../shared/components";
 import { ModalWindow } from "./components/modal";
@@ -8,6 +7,7 @@ import { NewGameBtn, SubmitBtn } from "./components/buttons";
 import { getField } from "../../shared/utils/algorythm";
 import { checkField } from "../../shared/utils/field-validation";
 import * as yup from "yup";
+import cl from "./game.module.css";
 
 export const Game = () => {
   return (
@@ -93,7 +93,6 @@ const GameContent = () => {
         <Formik
           key={fieldNumberRef.current}
           initialValues={data.generated}
-          // initialValues={data.filled}
           validateOnChange={false}
           validationSchema={validationSchema}
           enableReinitialize
@@ -122,7 +121,7 @@ const GameContent = () => {
       <ModalWindow
         visible={modalVisible}
         result={gameResult}
-        onCancel={data?.generated ? handleCancelClick : undefined}
+        onCancel={data?.generated && handleCancelClick}
         onSubmit={handleSubmitClick}
         onResult={handleResultChange}
       />

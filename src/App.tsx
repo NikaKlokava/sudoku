@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
+import { Error } from "./pages/error";
 import { Game } from "./pages/game";
 
 function App() {
@@ -7,6 +7,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/sudoku" element={<Game />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>
   );

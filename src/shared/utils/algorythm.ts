@@ -50,7 +50,7 @@ const field = {
   },
 };
 
-const type = {
+const numberToRemove = {
   [Difficulty.easy]: {
     [SizeOfField.Nine]: 20,
     [SizeOfField.Six]: 10,
@@ -74,6 +74,6 @@ const type = {
 };
 
 export const getField = (size: FieldSize, difficulty: GameDifficulty) => {
-  field[size].numberToRemove = type[difficulty][size];
+  field[size].numberToRemove = numberToRemove[difficulty][size];
   return new Field(field[size]);
 };

@@ -2,12 +2,12 @@ import { memo, useState } from "react";
 import { MyButton } from "../../../../shared/components";
 import { Difficulty, SizeOfField } from "../../../../shared/utils/utils";
 import { FieldSizeItem } from "./FieldSizeItem";
+import { isEqual, isUndefined } from "lodash";
+import { DifficultyItem } from "./DifficultyItem";
 import img9x9 from "../../../../assets/sudoku_9x9.png";
 import img6x6 from "../../../../assets/sudoku_6x6.png";
 import img4x4 from "../../../../assets/sudoku_4x4.png";
 import cl from "./modal.module.css";
-import { isEqual, isUndefined } from "lodash";
-import { DifficultyItem } from "./DifficultyItem";
 
 type Props = {
   visible: boolean;
