@@ -31,14 +31,3 @@ jobs:
         with:
           deploy_key: ${{ secrets.SSH_DEPLOY_KEY }}
           publish_dir: ./build
-
-      - name: Deploy
-        run: |
-          git config --global user.name NikaKlokava
-          git config --global user.email veronika.kazakevich1997@gmail.com
-          git remote set-url origin git@github.com:NikaKlokava/sudoku.git
-          npm run deploy
-        env:
-          user_name: "github-actions[bot]"
-          user_email: "github-actions[bot]@users.noreply.github.com"
-          github_ssh: ${{ secrets.SSH_DEPLOY_KEY }}
