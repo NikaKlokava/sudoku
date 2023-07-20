@@ -26,22 +26,11 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: creates output
-        run:  sh ./build.sh
-
-      - name: Pushes to another repository
-        uses: NikaKlokava/sudoku@main
-        env:
-          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
-        with:
-          source-directory: 'output'
-          destination-github-username: 'NikaKlokava'
-          destination-repository-name: 'sudoku'
-
       - name: Deploy
         run: |
           git config --global user.name NikaKlokava
           git config --global user.email veronika.kazakevich1997@gmail.com
+          git remote set-url origin git@github.com/${repository}
           npm run deploy
         env:
           user_name: "github-actions[bot]"
