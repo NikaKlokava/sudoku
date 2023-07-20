@@ -30,7 +30,7 @@ jobs:
         run: |
           git config --global user.name NikaKlokava
           git config --global user.email veronika.kazakevich1997@gmail.com
-          git remote set-url origin git@github.com/${repository}
+          git remote set-url origin git@github.com:NikaKlokava/${repository}.git
           npm run deploy
         env:
           user_name: "github-actions[bot]"
