@@ -1,10 +1,15 @@
-# Getting Started with Create React App
+# <p align="center"> *_`Sudoku`_* </p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## [_Website_](https://nikaklokava.github.io/sudoku)
 
-#
+### Project
 
-# _`Sudoku`_
+- Sudoku is one of the most popular Japanese puzzle games based on the logical arrangement of numbers.
+- The goal of Sudoku is to fill a grid with numbers so that each row, column and small grid contains all the numbers from 1 to 9 and they are not repeated.
+- You can choose the field size (9x9, 4x4 or 6x6).
+- Make the game more challenging by changing the game difficulty from "Easy" to "Impossible".
+- Your progress will be saved, so you can play at any time convenient for you.
+
 
 ## Work with:
 
@@ -24,34 +29,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - css modules;
 - dynamic className;
 
-## [_Website_](https://nikaklokava.github.io/sudoku)
 
-#
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-#
